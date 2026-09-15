@@ -122,7 +122,7 @@ export default function AdminCours() {
               <button
                 className="tag"
                 style={{
-                  border: 0, cursor: 'pointer',
+                  border: 0, cursor: 'pointer', flex: 'none',
                   background: c.premium ? 'var(--color-accent-200)' : 'var(--color-accent-2-200)',
                   color: c.premium ? 'var(--color-accent-800)' : 'var(--color-accent-2-800)',
                 }}

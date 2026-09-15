@@ -87,6 +87,9 @@ if (fs.existsSync(indexHtml)) {
   app.use(express.static(webDistDir, { index: false }));
   app.use((req, res, next) => {
     if (req.method !== "GET" && req.method !== "HEAD") return next();
+    // Le shell référence des bundles au nom haché : s'il est servi depuis le
+    // cache après un déploiement, le navigateur charge l'ancienne application.
+    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(indexHtml);
   });
   console.log(`Serving web build from ${webDistDir}`);
