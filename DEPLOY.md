@@ -60,18 +60,37 @@ Dans le dashboard Supabase : **Project Settings → Database → Connection stri
 Deux URLs sont nécessaires, parce que Prisma migre via une connexion directe et
 tourne via le pooler :
 
-| Variable       | Port   | Usage                                   |
-| -------------- | ------ | --------------------------------------- |
-| `DATABASE_URL` | `6543` | runtime — transaction pooler (pgBouncer) |
-| `DIRECT_URL`   | `5432` | `prisma migrate deploy`                  |
+| Variable       | Port   | Usage                                     |
+| -------------- | ------ | ----------------------------------------- |
+| `DATABASE_URL` | `6543` | runtime — transaction pooler (pgBouncer)   |
+| `DIRECT_URL`   | `5432` | `prisma migrate deploy` — session pooler   |
 
 ```
-DATABASE_URL="postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
-DIRECT_URL="postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://postgres.<ref>:<password>@aws-1-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://postgres.<ref>:<password>@aws-1-<region>.pooler.supabase.com:5432/postgres"
 ```
 
-`?pgbouncer=true&connection_limit=1` n'est pas optionnel : sans lui, Prisma
-prépare des requêtes que pgBouncer ne sait pas réutiliser en mode transaction.
+`?pgbouncer=true` n'est pas optionnel : sans lui, Prisma prépare des requêtes
+que pgBouncer ne sait pas réutiliser en mode transaction.
+
+N'ajoutez **pas** `connection_limit=1`. C'est la recette pour du serverless, où
+chaque invocation ouvre son propre client ; ici le conteneur est un process
+long, et plafonner le pool à une connexion sérialiserait toutes les requêtes.
+
+> **IPv6 — à vérifier avant le premier déploiement.** L'hôte de connexion
+> directe `db.<ref>.supabase.co` n'a **pas d'enregistrement A** : il n'est
+> joignable qu'en IPv6. Si votre serveur Coolify n'a pas d'IPv6 sortant,
+> `prisma migrate deploy` échouera au démarrage du conteneur.
+>
+> ```
+> $ host -t A db.<ref>.supabase.co
+> db.<ref>.supabase.co has no A record
+> ```
+>
+> Deux solutions : pointer `DIRECT_URL` sur le **session pooler**
+> (`aws-0-<region>.pooler.supabase.com:5432`, qui répond en IPv4) plutôt que sur
+> `db.<ref>.supabase.co`, ou activer l'add-on IPv4 de Supabase (payant). La
+> première est gratuite et suffit — c'est celle retenue par défaut ici.
 
 Le schéma est géré **par les migrations Prisma** (`server/prisma/migrations/`),
 pas depuis l'éditeur SQL de Supabase — l'entrypoint du conteneur applique
