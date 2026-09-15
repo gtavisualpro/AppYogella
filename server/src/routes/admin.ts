@@ -58,7 +58,13 @@ const courseSchema = z.object({
       }
       return id;
     }),
-  thumbnailUrl: z.string().optional(),
+  // Champ vidé = on retire l'image choisie et on retombe sur la miniature
+  // YouTube. Sans cette conversion, "" serait stocké tel quel et le repli
+  // `?? youtubeThumbnail(...)` ne se déclencherait jamais.
+  thumbnailUrl: z
+    .string()
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v.trim() === "" ? null : v.trim())),
   body: z.string().optional(),
   authorName: z.string().optional(),
   authorRole: z.string().optional(),
@@ -133,7 +139,10 @@ adminRouter.get("/programs", async (_req, res) => {
 const programSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim().optional(),
-  coverUrl: z.string().optional(),
+  coverUrl: z
+    .string()
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v.trim() === "" ? null : v.trim())),
   isRoutine: z.boolean().optional(),
 });
 
