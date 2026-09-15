@@ -20,9 +20,6 @@ export function TabBar() {
           </NavLink>
         ))}
       </div>
-      <div className="homebar">
-        <span />
-      </div>
     </div>
   )
 }
