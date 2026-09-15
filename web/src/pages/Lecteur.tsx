@@ -97,26 +97,29 @@ export default function Lecteur() {
   if (!course) return <Loader />
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="player-screen" style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
       <div
         style={{
           position: 'relative',
-          flex: 'none',
-          aspectRatio: '16 / 9',
+          flex: hasVideo ? 1 : 'none',
+          aspectRatio: hasVideo ? undefined : '16 / 9',
           minHeight: 220,
-          background: '#000',
+          background: hasVideo ? '#000' : undefined,
+          display: hasVideo ? 'flex' : undefined,
+          alignItems: 'center',
+          justifyContent: 'center',
           // Sans média, on garde le débord de la maquette sous la barre d'état.
           marginTop: hasVideo ? 0 : -46,
         }}
       >
         {isYoutube ? (
           // Conteneur remplacé par le lecteur YouTube, piloté par useYouTubePlayer.
-          <div ref={yt.containerRef} className="yt-host" />
+          <div ref={yt.containerRef} className="yt-host" style={{ aspectRatio: '16 / 9', width: '100%', height: 'auto', maxHeight: '100%' }} />
         ) : course.videoUrl ? (
           <video
             ref={videoRef}
             src={course.videoUrl}
-            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', maxHeight: '100%' }}
             playsInline
             onPlay={() => setFilePlaying(true)}
             onPause={() => setFilePlaying(false)}
@@ -139,7 +142,20 @@ export default function Lecteur() {
           </button>
         )}
       </div>
-      <div style={{ marginTop: hasVideo ? 0 : -32, background: 'var(--color-neutral-100)', borderRadius: '32px 32px 0 0', padding: '36px 22px 26px', position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div
+        style={{
+          marginTop: hasVideo ? 0 : -32,
+          background: 'var(--color-neutral-100)',
+          borderRadius: '32px 32px 0 0',
+          padding: '30px 22px calc(26px + env(safe-area-inset-bottom))',
+          position: 'relative',
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+          flex: 'none',
+        }}
+      >
         <div>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>{course.title}</h1>
           <div className="text-muted" style={{ fontSize: 14 }}>

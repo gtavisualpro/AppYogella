@@ -12,8 +12,14 @@
 .app-main {
   flex: 1;
   padding-bottom: 96px;
+  /* Colonne flex pour qu'une page puisse s'étirer sur toute la hauteur
+     (le lecteur ancre ses commandes en bas de l'écran). */
+  display: flex;
+  flex-direction: column;
 }
 .app-main.no-tabbar { padding-bottom: 28px; }
+/* Le lecteur va jusqu'au bord : pas de bande de fond sous sa carte. */
+.app-main.no-tabbar:has(.player-screen) { padding-bottom: 0; }
 
 .screen { padding: 20px 20px 8px; display: flex; flex-direction: column; gap: 22px; }
 .screen-tight { padding: 20px 0 8px; display: flex; flex-direction: column; gap: 18px; }
