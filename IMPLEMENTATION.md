@@ -12,29 +12,35 @@ A production build-out of the `Yogella.dc.html` Claude Design prototype (see
   Administration) plus the paywall and new Login/Register screens (the
   prototype had no real auth, so these didn't exist there).
 
-## Running locally
+## Déploiement & exécution
 
-Requires PostgreSQL running locally.
+Voir **[DEPLOY.md](DEPLOY.md)** pour le détail (Coolify, Supabase, variables
+d'environnement, volume des uploads).
+
+Le plus court chemin en local — Postgres + application, dans la même image que
+la production :
 
 ```bash
-# 1. Database
-createdb yogella   # or: psql -c "CREATE DATABASE yogella"
-
-# 2. Server
-cd server
-cp .env.example .env   # edit DATABASE_URL / JWT_SECRET as needed
-npm install
-npx prisma migrate dev
-npm run seed            # creates demo data + admin login
-npm run dev              # http://localhost:4000
-
-# 3. Web app (separate terminal)
-cd web
-npm install
-npm run dev              # http://localhost:5173 (proxies /api to :4000)
+docker compose up --build     # http://localhost:3000
 ```
 
-Demo admin login: `estelle@yogella.fr` / `password123`.
+En mode développement séparé (rechargement à chaud du front) :
+
+```bash
+cd server && cp .env.example .env && npm install
+npx prisma migrate dev && npm run seed && npm run dev   # :4000
+
+cd web && npm install && npm run dev                    # :5173
+```
+
+Compte admin de démonstration : `estelle@yogella.fr` / `password123`.
+
+## Base de données — Supabase
+
+Le schéma est piloté par Prisma (`server/prisma/schema.prisma`). La datasource
+expose deux URLs : `DATABASE_URL` (pooler pgBouncer, port 6543 chez Supabase)
+pour le runtime et `DIRECT_URL` (port 5432) pour `prisma migrate`. En local les
+deux pointent sur la même base.
 
 ## Stripe billing
 

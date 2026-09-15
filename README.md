@@ -1,3 +1,11 @@
+> **Ce bundle a été implémenté.** Le code de l'application vit dans `server/`
+> (API Express + Prisma) et `web/` (React + Vite). Voir
+> [IMPLEMENTATION.md](IMPLEMENTATION.md) pour l'architecture et
+> [DEPLOY.md](DEPLOY.md) pour le déploiement Coolify + Supabase. Le texte
+> ci-dessous est le README d'origine du handoff Claude Design.
+
+---
+
 # CODING AGENTS: READ THIS FIRST
 
 This is a **handoff bundle** from Claude Design (claude.ai/design).

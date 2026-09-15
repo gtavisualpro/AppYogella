@@ -1,0 +1,16 @@
+**/node_modules
+**/dist
+**/.env
+**/.env.*
+!**/.env.example
+.git
+.gitignore
+chats/
+project/
+*.md
+!server/prisma/**
+server/uploads/*
+!server/uploads/.gitkeep
+**/.DS_Store
+**/*.log
+docker-compose*.yml
