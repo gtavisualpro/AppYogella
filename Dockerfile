@@ -7,7 +7,10 @@
 FROM node:22-bookworm-slim AS web-build
 WORKDIR /build/web
 COPY web/package.json web/package-lock.json ./
-RUN npm ci
+# --include=dev est obligatoire : Coolify injecte NODE_ENV=production comme ENV
+# de build, et dans ce mode npm ci saute les devDependencies — or tsc, vite et
+# @vitejs/plugin-react en font partie.
+RUN npm ci --include=dev
 COPY web/ ./
 RUN npm run build
 
@@ -17,7 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /build/server
 COPY server/package.json server/package-lock.json ./
-RUN npm ci
+# Idem : le runtime a besoin de la CLI Prisma et de tsx, qu'un NODE_ENV=production
+# injecté au build pourrait écarter.
+RUN npm ci --include=dev
 # Le client Prisma est généré avant la compilation TS (les types en dépendent).
 COPY server/prisma ./prisma
 RUN npx prisma generate

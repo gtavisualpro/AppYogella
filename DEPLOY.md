@@ -162,3 +162,34 @@ dans `STRIPE_WEBHOOK_SECRET`.
   ne serait jamais posé derrière HTTPS.
 - **Migrations.** Toute évolution du schéma se fait via
   `npx prisma migrate dev --name <nom>` en local, puis commit du dossier généré.
+
+---
+
+## 5. Dépannage
+
+### `sh: 1: tsc: not found` pendant le build
+
+Coolify injecte les variables d'environnement de l'application comme `ARG`/`ENV`
+dans le Dockerfile. `NODE_ENV=production` est donc actif **pendant le build**, et
+dans ce mode `npm ci` ignore les `devDependencies` — or `typescript`, `vite` et
+`@vitejs/plugin-react` en font partie.
+
+C'est pourquoi les deux étapes de build utilisent `npm ci --include=dev`. Ne
+retirez pas ce drapeau : le symptôme est un build qui installe 9 paquets au lieu
+de 34, puis échoue en `exit code 127`.
+
+### `DATABASE_URL n'est pas défini` au démarrage du conteneur
+
+La variable existe au build mais pas à l'exécution. Dans Coolify, décochez
+**« Build Variable »** sur `DATABASE_URL` et `DIRECT_URL` : cochée, la variable
+n'est qu'un `ARG` de build et disparaît du conteneur.
+
+Les variables modifiées ne sont pas injectées dans un conteneur déjà lancé — il
+faut **redéployer**.
+
+### Avertissements `SecretsUsedInArgOrEnv`
+
+Ils signalent que des secrets (`JWT_SECRET`, `DATABASE_URL`) transitent par des
+`ARG` de build et se retrouvent donc dans les métadonnées de l'image. Non
+bloquant, mais c'est une raison de plus de laisser « Build Variable » décochée :
+l'application n'a besoin de ces valeurs qu'à l'exécution.
