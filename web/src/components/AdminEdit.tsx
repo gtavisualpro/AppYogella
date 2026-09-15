@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import { useUploadImage } from '../lib/adminHooks'
 import { useToast } from '../lib/ToastContext'
 import { ApiError } from '../lib/api'
@@ -62,6 +62,7 @@ export function ImagePicker({
   const uploadImage = useUploadImage()
   const flash = useToast()
   const input = useRef<HTMLInputElement>(null)
+  const inputId = useId()
   const [busy, setBusy] = useState(false)
   const shown = value ?? fallback ?? null
 
@@ -84,21 +85,26 @@ export function ImagePicker({
     <div className="field">
       <label>Image</label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        <div className="thumb-preview">
-          {shown ? <img src={shown} alt="" /> : <span className="text-muted" style={{ fontSize: 11 }}>Aucune</span>}
-        </div>
+        {/* L'aperçu est lui-même cliquable : c'est là qu'on porte le doigt. */}
+        <label htmlFor={inputId} className="thumb-preview" style={{ cursor: 'pointer' }}>
+          {shown ? <img src={shown} alt="" /> : <span className="text-muted" style={{ fontSize: 11 }}>Choisir</span>}
+        </label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1, minWidth: 0 }}>
-          <label className="dropzone" style={{ margin: 0 }}>
+          <label htmlFor={inputId} className="dropzone" style={{ margin: 0 }}>
             <IconUpload size={16} />
             {busy ? 'Envoi…' : 'Choisir une image'}
-            <input
-              ref={input}
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/avif"
-              hidden
-              onChange={onFile}
-            />
           </label>
+          {/* accept="image/*" plutôt qu'une liste de types : sinon les photos
+              iPhone (HEIC) apparaissent grisées dans le sélecteur. iOS les
+              convertit en JPEG à la sélection. */}
+          <input
+            id={inputId}
+            ref={input}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={onFile}
+          />
           {value ? (
             <button
               className="btn btn-ghost"

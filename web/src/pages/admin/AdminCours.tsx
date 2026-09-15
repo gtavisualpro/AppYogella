@@ -178,6 +178,7 @@ function CourseEditSheet({
   const [universe, setUniverse] = useState(course.universe)
   const [youtube, setYoutube] = useState(course.youtubeId ?? '')
   const [thumb, setThumb] = useState<string | null>(course.customThumbnailUrl)
+  const [premium, setPremium] = useState(course.premium)
 
   // Miniature YouTube du lien en cours de saisie, pour l'aperçu « image par défaut ».
   const ytFallback = /^[A-Za-z0-9_-]{11}$/.test(youtube.trim())
@@ -191,6 +192,7 @@ function CourseEditSheet({
       title: title.trim(),
       durationMin: parseInt(duration.replace(/\D/g, ''), 10) || course.durationMin,
       universe,
+      premium,
       youtubeId: youtube,
       thumbnailUrl: thumb ?? '',
     })}>
@@ -211,6 +213,21 @@ function CourseEditSheet({
             ))}
           </select>
         </div>
+      </div>
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '2px 4px', cursor: 'pointer' }}
+        onClick={() => setPremium((p) => !p)}
+      >
+        <span
+          className="switch"
+          style={{
+            background: premium ? 'var(--color-accent-600)' : 'var(--color-neutral-400)',
+            justifyContent: premium ? 'flex-end' : 'flex-start',
+          }}
+        >
+          <span className="knob" />
+        </span>
+        <span style={{ fontSize: 13.5 }}>{premium ? 'Réservé aux abonnées' : 'Accès gratuit'}</span>
       </div>
       <div className="field">
         <label htmlFor="ec-yt">Lien YouTube</label>

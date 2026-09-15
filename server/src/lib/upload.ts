@@ -28,14 +28,25 @@ export const uploadVideo = multer({
   },
 }).single("video");
 
-const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+// heic/heif : ce que produit un iPhone. Safari les affiche ; les autres
+// navigateurs non, mais iOS convertit en JPEG à la sélection dans un champ
+// accept="image/*", donc le cas reste rare et vaut mieux qu'un refus sec.
+const ALLOWED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+  "image/heic",
+  "image/heif",
+]);
 
 export const uploadImage = multer({
   storage,
   limits: { fileSize: 8 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     if (!ALLOWED_IMAGE_TYPES.has(file.mimetype)) {
-      cb(new Error("Format d'image non supporté (jpeg, png, webp, avif uniquement)"));
+      cb(new Error("Format d'image non supporté (jpeg, png, webp, avif, gif)"));
       return;
     }
     cb(null, true);
