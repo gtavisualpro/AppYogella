@@ -11,13 +11,18 @@ export interface AdminCourse {
   meta: string
   premium: boolean
   videoUrl: string | null
+  youtubeId: string | null
+  /** Ce qui s'affiche : image choisie, sinon miniature YouTube. */
   thumbnailUrl: string | null
+  /** Image réellement téléversée — null si l'on s'appuie sur YouTube. */
+  customThumbnailUrl: string | null
 }
 
 export interface AdminProgram {
   id: string
   title: string
   description: string | null
+  coverUrl: string | null
   isRoutine: boolean
   videoIds: string[]
   meta: string
@@ -76,6 +81,16 @@ export function useDeleteCourse() {
   })
 }
 
+export function useUploadImage() {
+  return useMutation({
+    mutationFn: (file: File) => {
+      const form = new FormData()
+      form.append('image', file)
+      return api.post<{ url: string }>('/api/admin/uploads/image', form)
+    },
+  })
+}
+
 export function useUploadVideo() {
   return useMutation({
     mutationFn: (file: File) => {
@@ -102,6 +117,15 @@ export function useAddProgram() {
   })
 }
 
+export function useUpdateProgram() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, ...body }: { id: string } & Record<string, unknown>) =>
+      api.patch(`/api/admin/programs/${id}`, body),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'programs'] }),
+  })
+}
+
 export function useToggleProgramVideo() {
   const qc = useQueryClient()
   return useMutation({
@@ -121,7 +145,8 @@ export function useAdminUsers() {
 export function useUpdateUser() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, ...body }: { id: string; active?: boolean; cyclePlan?: boolean }) => api.patch(`/api/admin/users/${id}`, body),
+    mutationFn: ({ id, ...body }: { id: string; name?: string; email?: string; isAdmin?: boolean; active?: boolean; cyclePlan?: boolean }) =>
+      api.patch(`/api/admin/users/${id}`, body),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'users'] }),
   })
 }

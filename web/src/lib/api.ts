@@ -63,6 +63,7 @@ export interface Course {
   authorName: string | null
   authorRole: string | null
   videoUrl?: string | null
+  youtubeEmbedUrl?: string | null
   body?: string | null
 }
 
@@ -80,6 +81,7 @@ export interface ProgramSummary {
   id: string
   title: string
   description: string | null
+  coverUrl: string | null
   isRoutine: boolean
   sessionCount: number
   totalDurationMin: number

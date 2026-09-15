@@ -28,4 +28,18 @@ export const uploadVideo = multer({
   },
 }).single("video");
 
+const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+
+export const uploadImage = multer({
+  storage,
+  limits: { fileSize: 8 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (!ALLOWED_IMAGE_TYPES.has(file.mimetype)) {
+      cb(new Error("Format d'image non supporté (jpeg, png, webp, avif uniquement)"));
+      return;
+    }
+    cb(null, true);
+  },
+}).single("image");
+
 export const uploadDirPath = uploadDir;

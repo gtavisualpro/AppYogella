@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
-import { useAdminCourses, useAddCourse, useUpdateCourse, useDeleteCourse, useUploadVideo } from '../../lib/adminHooks'
+import { useAdminCourses, useAddCourse, useUpdateCourse, useDeleteCourse, useUploadVideo, type AdminCourse } from '../../lib/adminHooks'
+import { EditSheet, ImagePicker } from '../../components/AdminEdit'
 import { useToast } from '../../lib/ToastContext'
 import { ApiError } from '../../lib/api'
-import { IconUpload, IconTrash } from '../../components/icons'
+import { IconUpload, IconTrash, IconPencil } from '../../components/icons'
 
 const UNIVERSES = ['Yoga', 'Auto-massages', 'Respiration', 'Comprendre son corps', 'Sommeil', 'Nutrition']
 
@@ -21,6 +22,8 @@ export default function AdminCours() {
   const [premium, setPremium] = useState(true)
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
   const [fileName, setFileName] = useState('')
+  const [youtube, setYoutube] = useState('')
+  const [editing, setEditing] = useState<AdminCourse | null>(null)
 
   async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -42,11 +45,24 @@ export default function AdminCours() {
       return
     }
     const durationMin = parseInt(duration.replace(/\D/g, ''), 10) || 20
-    await addCourse.mutateAsync({ title: t, durationMin, universe, premium, videoUrl: videoUrl ?? undefined })
+    try {
+      await addCourse.mutateAsync({
+        title: t,
+        durationMin,
+        universe,
+        premium,
+        videoUrl: videoUrl ?? undefined,
+        youtubeId: youtube.trim() || undefined,
+      })
+    } catch (err) {
+      flash(err instanceof ApiError ? err.message : 'Publication impossible')
+      return
+    }
     flash('Cours publié')
     setTitle('')
     setDuration('')
     setVideoUrl(null)
+    setYoutube('')
     setFileName('')
     if (fileInput.current) fileInput.current.value = ''
   }
@@ -75,6 +91,17 @@ export default function AdminCours() {
           {fileName || 'Déposer le fichier vidéo'}
           <input ref={fileInput} type="file" accept="video/mp4,video/webm,video/quicktime" hidden onChange={onFileChange} />
         </label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--color-neutral-600)', fontSize: 12 }}>
+          <span style={{ flex: 1, height: 1, background: 'var(--color-divider)' }} />
+          ou
+          <span style={{ flex: 1, height: 1, background: 'var(--color-divider)' }} />
+        </div>
+        <input
+          className="input"
+          placeholder="Coller un lien YouTube"
+          value={youtube}
+          onChange={(e) => setYoutube(e.target.value)}
+        />
         <button className="btn" style={{ background: 'var(--color-accent-600)', color: '#fff', padding: 12, fontSize: 14 }} onClick={publish} disabled={addCourse.isPending}>
           Publier le cours
         </button>
@@ -103,16 +130,107 @@ export default function AdminCours() {
               >
                 {c.premium ? 'Premium' : 'Gratuit'}
               </button>
-              <button
-                style={{ border: 0, background: 'none', cursor: 'pointer', display: 'flex', color: 'var(--color-neutral-600)', padding: 2 }}
-                onClick={() => deleteCourse.mutate(c.id)}
-              >
+              <button className="row-action" title="Éditer" onClick={() => setEditing(c)}>
+                <IconPencil size={17} />
+              </button>
+              <button className="row-action" title="Supprimer" onClick={() => deleteCourse.mutate(c.id)}>
                 <IconTrash size={17} />
               </button>
             </div>
           ))}
         </div>
       </div>
+
+      {editing && (
+        <CourseEditSheet
+          course={editing}
+          onClose={() => setEditing(null)}
+          onSave={async (patch) => {
+            try {
+              await updateCourse.mutateAsync({ id: editing.id, ...patch })
+            } catch (err) {
+              flash(err instanceof ApiError ? err.message : 'Enregistrement impossible')
+              return
+            }
+            flash('Cours mis à jour')
+            setEditing(null)
+          }}
+          saving={updateCourse.isPending}
+        />
+      )}
     </div>
+  )
+}
+
+function CourseEditSheet({
+  course,
+  onClose,
+  onSave,
+  saving,
+}: {
+  course: AdminCourse
+  onClose: () => void
+  onSave: (patch: Record<string, unknown>) => void
+  saving: boolean
+}) {
+  const [title, setTitle] = useState(course.title)
+  const [duration, setDuration] = useState(String(course.durationMin))
+  const [universe, setUniverse] = useState(course.universe)
+  const [youtube, setYoutube] = useState(course.youtubeId ?? '')
+  const [thumb, setThumb] = useState<string | null>(course.customThumbnailUrl)
+
+  // Miniature YouTube du lien en cours de saisie, pour l'aperçu « image par défaut ».
+  const ytFallback = /^[A-Za-z0-9_-]{11}$/.test(youtube.trim())
+    ? `https://img.youtube.com/vi/${youtube.trim()}/hqdefault.jpg`
+    : course.youtubeId
+    ? `https://img.youtube.com/vi/${course.youtubeId}/hqdefault.jpg`
+    : null
+
+  return (
+    <EditSheet title="Éditer le cours" onClose={onClose} saving={saving} onSave={() => onSave({
+      title: title.trim(),
+      durationMin: parseInt(duration.replace(/\D/g, ''), 10) || course.durationMin,
+      universe,
+      youtubeId: youtube,
+      thumbnailUrl: thumb ?? '',
+    })}>
+      <div className="field">
+        <label htmlFor="ec-title">Titre</label>
+        <input id="ec-title" className="input" value={title} onChange={(e) => setTitle(e.target.value)} />
+      </div>
+      <div style={{ display: 'flex', gap: 9 }}>
+        <div className="field" style={{ flex: 1, minWidth: 0 }}>
+          <label htmlFor="ec-dur">Durée (min)</label>
+          <input id="ec-dur" className="input" value={duration} onChange={(e) => setDuration(e.target.value)} />
+        </div>
+        <div className="field" style={{ flex: 1, minWidth: 0 }}>
+          <label htmlFor="ec-univ">Univers</label>
+          <select id="ec-univ" className="input" style={{ cursor: 'pointer' }} value={universe} onChange={(e) => setUniverse(e.target.value)}>
+            {[...new Set([course.universe, ...UNIVERSES])].map((u) => (
+              <option key={u}>{u}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="field">
+        <label htmlFor="ec-yt">Lien YouTube</label>
+        <input
+          id="ec-yt"
+          className="input"
+          placeholder={course.videoUrl ? 'Vidéo hébergée — laisser vide' : 'Coller un lien YouTube'}
+          value={youtube}
+          onChange={(e) => setYoutube(e.target.value)}
+        />
+        {course.videoUrl && !youtube.trim() && (
+          <span className="text-muted" style={{ fontSize: 12 }}>Fichier vidéo téléversé utilisé.</span>
+        )}
+      </div>
+      <ImagePicker
+        value={thumb}
+        fallback={ytFallback}
+        fallbackLabel={ytFallback ? 'Utiliser la miniature YouTube' : 'Aucune image par défaut'}
+        onChange={setThumb}
+      />
+    </EditSheet>
   )
 }

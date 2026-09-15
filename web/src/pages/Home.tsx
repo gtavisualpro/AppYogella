@@ -87,7 +87,7 @@ export default function Home() {
           {(programs ?? []).slice(0, 3).map((p) => (
             <button key={p.id} className="prog-card" onClick={() => navigate(`/programme/${p.id}`)}>
               <div className="cover">
-                <IconVideo size={26} />
+                {p.coverUrl ? <img src={p.coverUrl} alt="" /> : <IconVideo size={26} />}
                 {p.locked && (
                   <span className="lock-chip">
                     <IconLock size={14} />

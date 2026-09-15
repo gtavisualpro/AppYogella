@@ -2,7 +2,8 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { requireAdmin } from "../middleware/auth.js";
-import { uploadVideo } from "../lib/upload.js";
+import { uploadVideo, uploadImage } from "../lib/upload.js";
+import { parseYoutubeId, youtubeThumbnail } from "../lib/youtube.js";
 
 export const adminRouter = Router();
 
@@ -23,7 +24,12 @@ adminRouter.get("/courses", async (_req, res) => {
       meta: `${c.universe} · ${c.durationMin} min`,
       premium: c.premium,
       videoUrl: c.videoUrl,
-      thumbnailUrl: c.thumbnailUrl,
+      youtubeId: c.youtubeId,
+      // Ce que le front affiche ; l'admin voit donc la miniature YouTube dès
+      // qu'aucune image n'a été téléversée.
+      thumbnailUrl: c.thumbnailUrl ?? (c.youtubeId ? youtubeThumbnail(c.youtubeId) : null),
+      // Vignette réellement stockée, pour savoir si l'admin a choisi une image.
+      customThumbnailUrl: c.thumbnailUrl,
     })),
   });
 });
@@ -36,6 +42,23 @@ const courseSchema = z.object({
   premium: z.boolean().default(true),
   kind: z.enum(["COURSE", "ARTICLE"]).default("COURSE"),
   videoUrl: z.string().optional(),
+  // L'administratrice colle une URL YouTube sous n'importe quelle forme ; on ne
+  // stocke que l'identifiant. Une chaîne vide efface la vidéo YouTube.
+  youtubeId: z
+    .string()
+    .optional()
+    .transform((v, ctx) => {
+      if (v === undefined) return undefined;
+      const raw = v.trim();
+      if (raw === "") return null; // champ vidé : on retire la vidéo YouTube
+      const id = parseYoutubeId(raw);
+      if (!id) {
+        ctx.addIssue({ code: "custom", message: "Lien YouTube invalide" });
+        return z.NEVER;
+      }
+      return id;
+    }),
+  thumbnailUrl: z.string().optional(),
   body: z.string().optional(),
   authorName: z.string().optional(),
   authorRole: z.string().optional(),
@@ -43,7 +66,9 @@ const courseSchema = z.object({
 
 adminRouter.post("/courses", async (req, res) => {
   const parsed = courseSchema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).json({ error: "Champs invalides", details: parsed.error.flatten() });
+  if (!parsed.success) {
+    return res.status(400).json({ error: parsed.error.issues[0]?.message ?? "Champs invalides" });
+  }
   const course = await prisma.course.create({ data: parsed.data });
   res.status(201).json({ course });
 });
@@ -52,7 +77,9 @@ const courseUpdateSchema = courseSchema.partial();
 
 adminRouter.patch("/courses/:id", async (req, res) => {
   const parsed = courseUpdateSchema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).json({ error: "Champs invalides" });
+  if (!parsed.success) {
+    return res.status(400).json({ error: parsed.error.issues[0]?.message ?? "Champs invalides" });
+  }
   const course = await prisma.course
     .update({ where: { id: req.params.id }, data: parsed.data })
     .catch(() => null);
@@ -73,6 +100,14 @@ adminRouter.post("/uploads/video", (req, res) => {
   });
 });
 
+adminRouter.post("/uploads/image", (req, res) => {
+  uploadImage(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    if (!req.file) return res.status(400).json({ error: "Aucun fichier reçu" });
+    res.status(201).json({ url: `/uploads/${req.file.filename}` });
+  });
+});
+
 // ───────────────────────── Programs ─────────────────────────
 
 adminRouter.get("/programs", async (_req, res) => {
@@ -85,6 +120,7 @@ adminRouter.get("/programs", async (_req, res) => {
       id: p.id,
       title: p.title,
       description: p.description,
+      coverUrl: p.coverUrl,
       isRoutine: p.isRoutine,
       videoIds: p.courses.map((pc) => pc.courseId),
       meta: `${p.courses.length} vidéo${p.courses.length === 1 ? "" : "s"} liée${
@@ -97,6 +133,7 @@ adminRouter.get("/programs", async (_req, res) => {
 const programSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim().optional(),
+  coverUrl: z.string().optional(),
   isRoutine: z.boolean().optional(),
 });
 
@@ -174,6 +211,9 @@ adminRouter.get("/users", async (_req, res) => {
 });
 
 const userUpdateSchema = z.object({
+  name: z.string().trim().min(1).optional(),
+  email: z.string().trim().toLowerCase().email().optional(),
+  isAdmin: z.boolean().optional(),
   active: z.boolean().optional(),
   cyclePlan: z.boolean().optional(),
 });
@@ -184,8 +224,29 @@ adminRouter.patch("/users/:id", async (req, res) => {
   const user = await prisma.user.findUnique({ where: { id: req.params.id }, include: { subscription: true } });
   if (!user) return res.status(404).json({ error: "Utilisateur introuvable" });
 
-  if (parsed.data.active !== undefined) {
-    await prisma.user.update({ where: { id: user.id }, data: { active: parsed.data.active } });
+  // Une administratrice ne peut pas se retirer ses propres droits ni se
+  // désactiver : ce serait un aller sans retour depuis l'interface.
+  const isSelf = req.user?.id === user.id;
+  if (isSelf && (parsed.data.isAdmin === false || parsed.data.active === false)) {
+    return res.status(400).json({ error: "Vous ne pouvez pas retirer vos propres accès" });
+  }
+
+  const { name, email, isAdmin, active } = parsed.data;
+  if (name !== undefined || email !== undefined || isAdmin !== undefined || active !== undefined) {
+    try {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          ...(name !== undefined ? { name } : {}),
+          ...(email !== undefined ? { email } : {}),
+          ...(isAdmin !== undefined ? { isAdmin } : {}),
+          ...(active !== undefined ? { active } : {}),
+        },
+      });
+    } catch {
+      // Contrainte d'unicité sur l'email.
+      return res.status(409).json({ error: "Cette adresse email est déjà utilisée" });
+    }
   }
 
   if (parsed.data.cyclePlan) {

@@ -77,7 +77,12 @@ model Course {
   category     String?
   durationMin  Int
   premium      Boolean    @default(false)
+  // Un cours a soit une vidéo hébergée (videoUrl), soit une vidéo YouTube
+  // (youtubeId, l'identifiant à 11 caractères), jamais les deux.
   videoUrl     String?
+  youtubeId    String?
+  // Vignette choisie explicitement. Si elle est vide et que youtubeId existe,
+  // l'API retombe sur la miniature YouTube.
   thumbnailUrl String?
   authorName   String?
   authorRole   String?
@@ -93,6 +98,7 @@ model Program {
   id          String   @id @default(cuid())
   title       String
   description String?
+  coverUrl    String?
   isRoutine   Boolean  @default(false)
   createdAt   DateTime @default(now())
 

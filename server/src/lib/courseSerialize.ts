@@ -1,4 +1,5 @@
 import type { Course } from "@prisma/client";
+import { youtubeThumbnail, youtubeEmbedUrl } from "./youtube.js";
 
 export function courseMeta(course: Pick<Course, "universe" | "durationMin">) {
   return `${course.universe} · ${course.durationMin} min`;
@@ -21,11 +22,17 @@ export function serializeCourse(
     meta: `${course.durationMin} min`,
     premium: course.premium,
     locked,
-    thumbnailUrl: course.thumbnailUrl,
+    // Vignette explicite si elle existe, sinon celle de YouTube — c'est ce qui
+    // permet à l'admin de « laisser l'image de YouTube » sans rien téléverser.
+    thumbnailUrl: course.thumbnailUrl ?? (course.youtubeId ? youtubeThumbnail(course.youtubeId) : null),
     authorName: course.authorName,
     authorRole: course.authorRole,
     ...(includeMedia && !locked
-      ? { videoUrl: course.videoUrl, body: course.body }
-      : { videoUrl: null, body: null }),
+      ? {
+          videoUrl: course.videoUrl,
+          youtubeEmbedUrl: course.youtubeId ? youtubeEmbedUrl(course.youtubeId) : null,
+          body: course.body,
+        }
+      : { videoUrl: null, youtubeEmbedUrl: null, body: null }),
   };
 }

@@ -73,10 +73,18 @@ export default function Lecteur() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div style={{ position: 'relative', flex: 1, minHeight: 340, marginTop: -46 }}>
-        {course.videoUrl ? (
+        {course.youtubeEmbedUrl ? (
+          <iframe
+            src={course.youtubeEmbedUrl}
+            title={course.title}
+            style={{ width: '100%', height: '100%', border: 0, display: 'block' }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : course.videoUrl ? (
           <video src={course.videoUrl} style={{ width: '100%', height: '100%', objectFit: 'cover' }} controls />
         ) : (
-          <img src={heroPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '45% 60%' }} />
+          <img src={course.thumbnailUrl ?? heroPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '45% 60%' }} />
         )}
         <button className="icon-btn floating" style={{ position: 'absolute', left: 18, top: 62 }} onClick={() => navigate(-1)}>
           <IconChevronLeft size={17} />

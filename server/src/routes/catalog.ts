@@ -1,6 +1,23 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
+import { youtubeThumbnail } from "../lib/youtube.js";
 import { serializeCourse } from "../lib/courseSerialize.js";
+
+/**
+ * Couverture d'un programme : l'image choisie par l'admin, sinon la vignette de
+ * la première séance (elle-même issue de YouTube si le cours en vient).
+ */
+function programCover(p: {
+  coverUrl: string | null;
+  courses: { course: { thumbnailUrl: string | null; youtubeId: string | null } }[];
+}): string | null {
+  if (p.coverUrl) return p.coverUrl;
+  for (const pc of p.courses) {
+    if (pc.course.thumbnailUrl) return pc.course.thumbnailUrl;
+    if (pc.course.youtubeId) return youtubeThumbnail(pc.course.youtubeId);
+  }
+  return null;
+}
 
 export const catalogRouter = Router();
 
@@ -46,6 +63,7 @@ catalogRouter.get("/programs", async (req, res) => {
       id: p.id,
       title: p.title,
       description: p.description,
+      coverUrl: programCover(p),
       isRoutine: p.isRoutine,
       sessionCount: p.courses.length,
       totalDurationMin: p.courses.reduce((n, pc) => n + pc.course.durationMin, 0),
@@ -84,6 +102,7 @@ catalogRouter.get("/programs/:id", async (req, res) => {
       id: program.id,
       title: program.title,
       description: program.description,
+      coverUrl: programCover(program),
       isRoutine: program.isRoutine,
       sessions: program.courses.map((pc, i) => ({
         ...serializeCourse(pc.course, hasAccess),
