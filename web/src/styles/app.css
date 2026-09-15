@@ -216,23 +216,24 @@
   .app-shell { border-inline: 1px solid var(--color-divider); box-shadow: var(--shadow-md); }
 }
 
-/* — panneau d'administration : feuille d'édition — */
-.sheet-backdrop {
+/* — panneau d'administration : feuille d'édition —
+   Préfixées « edit- » : `.sheet` existe déjà plus haut pour les pages de
+   contenu (Programme), et la redéfinir cassait leur mise en page. */
+.edit-sheet-backdrop {
   position: fixed; inset: 0; z-index: 60;
   background: color-mix(in srgb, #2e2b25 46%, transparent);
   display: flex; align-items: flex-end; justify-content: center;
 }
-.sheet {
+.edit-sheet {
   width: 100%; max-width: 480px;
   max-height: 88vh; overflow-y: auto;
-  display: flex; flex-direction: column; gap: 12;
-  gap: 12px;
+  display: flex; flex-direction: column; gap: 12px;
   padding: 10px 18px calc(20px + env(safe-area-inset-bottom));
   background: var(--color-surface);
   border-radius: 22px 22px 0 0;
   box-shadow: var(--shadow-lg);
 }
-.sheet-handle {
+.edit-sheet-handle {
   width: 38px; height: 4px; border-radius: 999px; flex: none;
   background: var(--color-divider); margin: 2px auto 6px;
 }
@@ -274,3 +275,6 @@
   .loader-ring { animation: loader-pulse 1.4s ease-in-out infinite; }
   @keyframes loader-pulse { 0%, 100% { opacity: .35 } 50% { opacity: 1 } }
 }
+
+/* Le lecteur YouTube remplace ce conteneur par son propre iframe. */
+.yt-host, .yt-host iframe { width: 100%; height: 100%; border: 0; display: block; }

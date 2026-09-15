@@ -63,6 +63,7 @@ export interface Course {
   authorName: string | null
   authorRole: string | null
   videoUrl?: string | null
+  youtubeId?: string | null
   youtubeEmbedUrl?: string | null
   body?: string | null
 }

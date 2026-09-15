@@ -30,9 +30,10 @@ export function serializeCourse(
     ...(includeMedia && !locked
       ? {
           videoUrl: course.videoUrl,
+          youtubeId: course.youtubeId,
           youtubeEmbedUrl: course.youtubeId ? youtubeEmbedUrl(course.youtubeId) : null,
           body: course.body,
         }
-      : { videoUrl: null, youtubeEmbedUrl: null, body: null }),
+      : { videoUrl: null, youtubeId: null, youtubeEmbedUrl: null, body: null }),
   };
 }

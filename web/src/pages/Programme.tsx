@@ -54,7 +54,7 @@ export default function Programme() {
             {program.sessions.map((s) => (
               <button key={s.id} className="list-row" onClick={() => open(s)}>
                 <div className="thumb" style={{ width: 64, height: 56 }}>
-                  <IconVideo size={18} />
+                  {s.thumbnailUrl ? <img src={s.thumbnailUrl} alt="" /> : <IconVideo size={18} />}
                   {s.locked && (
                     <span className="lock-badge">
                       <IconLock size={15} />

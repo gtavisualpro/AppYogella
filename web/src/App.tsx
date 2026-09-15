@@ -42,12 +42,16 @@ export default function App() {
             <Route path="pratique" element={<Pratique />} />
             <Route path="favoris" element={<Favoris />} />
             <Route path="profil" element={<Profil />} />
+
+            {/* Programme et article gardent la barre d'onglets : ce sont des
+                pages de contenu, pas des parcours à part. */}
+            <Route path="programme/:id" element={<Programme />} />
+            <Route path="article/:id" element={<Article />} />
           </Route>
 
           <Route element={<BareLayout />}>
-            <Route path="programme/:id" element={<Programme />} />
+            {/* Le lecteur occupe l'écran entier, l'abonnement est un tunnel. */}
             <Route path="lecteur/:id" element={<Lecteur />} />
-            <Route path="article/:id" element={<Article />} />
             <Route path="abonnement" element={<Paywall />} />
 
             <Route element={<RequireAdmin />}>

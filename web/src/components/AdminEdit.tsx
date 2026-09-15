@@ -19,9 +19,9 @@ export function EditSheet({
   children: ReactNode
 }) {
   return (
-    <div className="sheet-backdrop" onClick={onClose} role="presentation">
-      <div className="sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
-        <div className="sheet-handle" />
+    <div className="edit-sheet-backdrop" onClick={onClose} role="presentation">
+      <div className="edit-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
+        <div className="edit-sheet-handle" />
         <div className="panel-title" style={{ marginBottom: 4 }}>{title}</div>
         {children}
         <div style={{ display: 'flex', gap: 9, marginTop: 4 }}>
