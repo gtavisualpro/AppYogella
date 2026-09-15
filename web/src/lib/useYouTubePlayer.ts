@@ -12,6 +12,7 @@ interface YTPlayer {
   playVideo(): void
   pauseVideo(): void
   seekTo(seconds: number, allowSeekAhead: boolean): void
+  setPlaybackRate(rate: number): void
   getCurrentTime(): number
   getDuration(): number
   destroy(): void
@@ -112,6 +113,7 @@ export function useYouTubePlayer(videoId: string | null | undefined) {
     currentTime,
     duration,
     toggle: () => (playing ? playerRef.current?.pauseVideo() : playerRef.current?.playVideo()),
+    setPlaybackRate: (rate: number) => playerRef.current?.setPlaybackRate(rate),
     seekTo: (seconds: number) => {
       playerRef.current?.seekTo(Math.max(0, seconds), true)
       setCurrentTime(Math.max(0, seconds))

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCourse, useFavorites } from '../lib/hooks'
+import { useCourse, useFavorites, useUniverses } from '../lib/hooks'
 import { useYouTubePlayer } from '../lib/useYouTubePlayer'
 import { useAuth } from '../lib/AuthContext'
+import { useToast } from '../lib/ToastContext'
 import { api } from '../lib/api'
 import {
   IconChevronLeft,
@@ -13,9 +14,8 @@ import {
   IconRewind15,
   IconForward15,
   IconList,
-  IconDownload,
-  IconAirplay,
   IconMore,
+  IconShare,
 } from '../components/icons'
 import heroPhoto from '../assets/course-photo.webp'
 import { Loader } from '../components/Loader'
@@ -32,6 +32,8 @@ export default function Lecteur() {
   const { user } = useAuth()
   const { data: course } = useCourse(id)
   const { data: favorites } = useFavorites(!!user)
+  const { data: universes } = useUniverses()
+  const flash = useToast()
   const queryClient = useQueryClient()
 
   const yt = useYouTubePlayer(course?.youtubeId)
@@ -40,6 +42,8 @@ export default function Lecteur() {
   const hasVideo = isYoutube || !!course?.videoUrl
 
   // Position et durée viennent du lecteur réel, plus d'une minuterie factice.
+  const [speed, setSpeed] = useState(1)
+  const [showSpeed, setShowSpeed] = useState(false)
   const [fileTime, setFileTime] = useState(0)
   const [filePlaying, setFilePlaying] = useState(false)
   const [fileDuration, setFileDuration] = useState(0)
@@ -57,6 +61,12 @@ export default function Lecteur() {
     if (!v) return
     if (v.paused) void v.play()
     else v.pause()
+  }
+  const changeSpeed = (rate: number) => {
+    setSpeed(rate)
+    setShowSpeed(false)
+    if (isYoutube) yt.setPlaybackRate(rate)
+    else if (videoRef.current) videoRef.current.playbackRate = rate
   }
   const seekBy = (delta: number) => {
     const target = currentSec + delta
@@ -88,6 +98,29 @@ export default function Lecteur() {
     mutationFn: () => (isFav ? api.delete(`/api/favorites/${id}`) : api.post(`/api/favorites/${id}`)),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['favorites'] }),
   })
+
+  // « Liste » renvoie vers les autres cours du même univers.
+  const universeSlug = universes?.find((u) => u.label === course?.universe)?.slug
+
+  async function share() {
+    const url = window.location.href
+    const title = course?.title ?? 'Yogella'
+    if (navigator.share) {
+      // L'utilisatrice peut annuler le partage : ce n'est pas une erreur.
+      try {
+        await navigator.share({ title, url })
+        return
+      } catch {
+        return
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url)
+      flash('Lien copié')
+    } catch {
+      flash('Impossible de copier le lien')
+    }
+  }
 
   function seek(e: React.MouseEvent<HTMLDivElement>) {
     const r = e.currentTarget.getBoundingClientRect()
@@ -187,20 +220,43 @@ export default function Lecteur() {
             <IconForward15 />
           </button>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px 0', color: 'var(--color-neutral-700)' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, fontSize: 11.5 }}>
-            <IconList size={20} /> Liste
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, fontSize: 11.5 }}>
-            <IconDownload size={20} /> Télécharger
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, fontSize: 11.5 }}>
-            <IconAirplay size={20} /> AirPlay
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, fontSize: 11.5 }}>
-            <IconMore size={20} /> Plus
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '6px 8px 0', color: 'var(--color-neutral-700)' }}>
+          <button
+            className="player-action"
+            disabled={!universeSlug}
+            onClick={() => universeSlug && navigate(`/categorie/${universeSlug}`)}
+          >
+            <IconList size={20} />
+            {course.universe}
+          </button>
+          <button className="player-action" onClick={() => setShowSpeed((v) => !v)}>
+            <IconMore size={20} />
+            Vitesse {speed}×
+          </button>
+          <button className="player-action" onClick={share}>
+            <IconShare size={20} />
+            Partager
+          </button>
         </div>
+        {showSpeed && (
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', paddingTop: 2 }}>
+            {[0.75, 1, 1.25, 1.5].map((r) => (
+              <button
+                key={r}
+                className="tag"
+                style={{
+                  border: 0,
+                  cursor: 'pointer',
+                  background: r === speed ? 'var(--color-accent-600)' : 'var(--color-neutral-200)',
+                  color: r === speed ? '#fff' : 'var(--color-text)',
+                }}
+                onClick={() => changeSpeed(r)}
+              >
+                {r}×
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

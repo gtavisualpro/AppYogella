@@ -284,3 +284,13 @@
 
 /* Le lecteur YouTube remplace ce conteneur par son propre iframe. */
 .yt-host, .yt-host iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Actions sous les commandes du lecteur. */
+.player-action {
+  display: flex; flex-direction: column; align-items: center; gap: 6;
+  gap: 6px; font-size: 11.5px; font-family: inherit;
+  border: 0; background: none; color: inherit; cursor: pointer;
+  padding: 6px 10px; border-radius: 16px; min-width: 76px;
+}
+.player-action:active { background: var(--color-neutral-200); }
+.player-action:disabled { opacity: .4; cursor: default; }

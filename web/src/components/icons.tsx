@@ -139,6 +139,13 @@ export const IconBookmark = (p: IconProps) => (
     <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
   </Svg>
 )
+export const IconShare = (p: IconProps) => (
+  <Svg {...p} strokeWidth={p.strokeWidth ?? 2.4}>
+    <path d="M12 3v13" />
+    <path d="M8 7l4-4 4 4" />
+    <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+  </Svg>
+)
 export const IconPencil = (p: IconProps) => (
   <Svg {...p} strokeWidth={p.strokeWidth ?? 2.4}>
     <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z" />
