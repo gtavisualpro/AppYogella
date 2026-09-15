@@ -18,7 +18,7 @@ export default function Register() {
     setBusy(true)
     try {
       await register(name, email, password)
-      navigate('/', { replace: true })
+      navigate('/home', { replace: true })
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Une erreur est survenue')
     } finally {

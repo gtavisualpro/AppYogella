@@ -19,7 +19,7 @@ export default function Login() {
     try {
       await login(email, password)
       const from = (location.state as { from?: Location })?.from
-      navigate(from?.pathname ?? '/', { replace: true })
+      navigate(from?.pathname ?? '/home', { replace: true })
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Une erreur est survenue')
     } finally {

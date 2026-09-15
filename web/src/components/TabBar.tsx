@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { IconHome, IconSearch, IconPulse, IconHeart, IconUser } from './icons'
 
 const TABS = [
-  { to: '/', label: 'Accueil', Icon: IconHome, end: true },
+  { to: '/home', label: 'Accueil', Icon: IconHome, end: true },
   { to: '/recherche', label: 'Recherche', Icon: IconSearch },
   { to: '/pratique', label: 'Ma pratique', Icon: IconPulse },
   { to: '/favoris', label: 'Favoris', Icon: IconHeart },

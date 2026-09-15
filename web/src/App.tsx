@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Navigate, Routes, Route } from 'react-router-dom'
 import { AppShell, TabLayout, BareLayout } from './components/Layout'
 import { RequireAuth, RequireAdmin } from './components/guards'
 import Login from './pages/Login'
@@ -25,40 +25,43 @@ export default function App() {
   return (
     <Routes>
       <Route element={<AppShell />}>
+        {/* Seules routes publiques : l'application entière est derrière le login. */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
-        <Route element={<TabLayout />}>
-          <Route index element={<Home />} />
-          <Route path="explorer" element={<Explorer />} />
-          <Route path="categorie/:slug" element={<Categorie />} />
-          <Route path="recherche" element={<Recherche />} />
-          <Route path="experts" element={<Experts />} />
+        <Route element={<RequireAuth />}>
+          {/* La racine renvoie sur /home, l'écran d'arrivée après connexion. */}
+          <Route index element={<Navigate to="/home" replace />} />
 
-          <Route element={<RequireAuth />}>
+          <Route element={<TabLayout />}>
+            <Route path="home" element={<Home />} />
+            <Route path="explorer" element={<Explorer />} />
+            <Route path="categorie/:slug" element={<Categorie />} />
+            <Route path="recherche" element={<Recherche />} />
+            <Route path="experts" element={<Experts />} />
             <Route path="pratique" element={<Pratique />} />
             <Route path="favoris" element={<Favoris />} />
             <Route path="profil" element={<Profil />} />
           </Route>
-        </Route>
 
-        <Route element={<BareLayout />}>
-          <Route path="programme/:id" element={<Programme />} />
-          <Route path="lecteur/:id" element={<Lecteur />} />
-          <Route path="article/:id" element={<Article />} />
-
-          <Route element={<RequireAuth />}>
+          <Route element={<BareLayout />}>
+            <Route path="programme/:id" element={<Programme />} />
+            <Route path="lecteur/:id" element={<Lecteur />} />
+            <Route path="article/:id" element={<Article />} />
             <Route path="abonnement" element={<Paywall />} />
-          </Route>
 
-          <Route element={<RequireAdmin />}>
-            <Route path="admin" element={<AdminLayout />}>
-              <Route index element={<AdminCours />} />
-              <Route path="programmes" element={<AdminProgrammes />} />
-              <Route path="utilisateurs" element={<AdminUtilisateurs />} />
-              <Route path="abonnements" element={<AdminAbonnements />} />
+            <Route element={<RequireAdmin />}>
+              <Route path="admin" element={<AdminLayout />}>
+                <Route index element={<AdminCours />} />
+                <Route path="programmes" element={<AdminProgrammes />} />
+                <Route path="utilisateurs" element={<AdminUtilisateurs />} />
+                <Route path="abonnements" element={<AdminAbonnements />} />
+              </Route>
             </Route>
           </Route>
+
+          {/* Chemin inconnu : retour à l'accueil plutôt qu'un écran blanc. */}
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Route>
       </Route>
     </Routes>
