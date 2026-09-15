@@ -16,8 +16,10 @@ export default function Programme() {
   const nextSession = program.sessions.find((s) => !s.done) ?? program.sessions[0]
 
   return (
-    <div>
-      <div className="hero-media" style={{ marginTop: -46 }}>
+    // Colonne pleine hauteur : la carte blanche doit descendre jusqu'en bas,
+    // sinon une bande de fond apparaît sous un programme court.
+    <div className="app-sheet-page" style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+      <div className="hero-media" style={{ marginTop: -46, flex: 'none' }}>
         <img className="washed" src={heroPhoto} alt="" style={{ objectPosition: '50% 45%' }} />
         <button className="icon-btn floating" style={{ position: 'absolute', left: 18, top: 62 }} onClick={() => navigate(-1)}>
           <IconChevronLeft size={17} />
