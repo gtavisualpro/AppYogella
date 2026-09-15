@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-44bbf39b-4b57-4cc5-b493-fb8d494918a0/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="_ds/organic-44bbf39b-4b57-4cc5-b493-fb8d494918a0/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#f5ead8}
+*{box-sizing:border-box}
+.yg-scroll::-webkit-scrollbar{width:0;height:0}
+a{color:#8c491a}a:hover{color:#b2622d}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);font-family:var(--font-body);color:var(--color-text);padding:36px 24px 56px;display:flex;flex-direction:column;align-items:center;gap:22px">
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
+    <div style="font-family:var(--font-heading);font-size:30px;color:var(--color-accent-700)">Yogella</div>
+    <div style="font-size:13px;color:var(--color-neutral-600);max-width:520px">Prototype cliquable · {{ statusLabel }}</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:760px">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="11">
+      <button onClick="{{ n.go }}" class="btn" style="font-family:var(--font-body);font-size:12px;font-weight:600;padding:6px 14px;border:1px solid var(--color-divider);background: {{ n.bg }};color: {{ n.fg }}">{{ n.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;width:390px;height:844px;border-radius:46px;border:10px solid #2e2b25;background:var(--color-neutral-100);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 26px 2px;font-size:13px;font-weight:700;flex:none;position:relative;z-index:5">
+      <span>9:41</span>
+      <span style="display:flex;align-items:center;gap:5px">
+        <svg width="16" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="1" y="14" width="3" height="7" rx="1"></rect><rect x="7" y="10" width="3" height="11" rx="1"></rect><rect x="13" y="6" width="3" height="15" rx="1"></rect><rect x="19" y="2" width="3" height="19" rx="1"></rect></svg>
+        <svg width="15" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0"></path><path d="M8.5 16a5 5 0 0 1 7 0"></path><path d="M12 19.5h.01"></path></svg>
+        <svg width="24" height="12" viewBox="0 0 28 14" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="1" width="22" height="12" rx="4"></rect><rect x="3" y="3" width="18" height="8" rx="2.5" fill="currentColor" stroke="none"></rect><path d="M25.5 5.5v3" stroke-linecap="round" stroke-width="2.5"></path></svg>
+      </span>
+    </div>
+
+    <div class="yg-scroll" style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+      <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:22px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:var(--font-heading);font-size:26px;color:var(--color-accent-700)">Yogella</div>
+          <div style="width:38px;height:38px;border-radius:999px;background:var(--color-neutral-200);display:flex;align-items:center;justify-content:center">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a2 2 0 0 0 3.4 0"></path></svg>
+          </div>
+        </div>
+
+        <div>
+          <h1 style="font-size:27px;margin:0 0 4px">Bonjour {{ name }}</h1>
+          <div style="font-size:14px;color:var(--color-neutral-700)">Comment te sens-tu aujourd'hui ?</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <sc-for list="{{ moods }}" as="m" hint-placeholder-count="8">
+            <button onClick="{{ m.go }}" style="grid-column: {{ m.span }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:86px;padding:12px 6px;border-radius:24px;border:1px solid var(--color-divider);background:var(--color-neutral-100);cursor:pointer;font-family:var(--font-body)" style-hover="background:var(--color-accent-100);border-color:var(--color-accent-300)">
+              <span style="width:32px;height:32px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-800);display:flex;align-items:center;justify-content:center" dangerouslySetInnerHTML="{{ m.icon }}"></span>
+              <span style="font-size:12px;font-weight:600;line-height:1.25;text-align:center">{{ m.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div>
+          <h2 style="font-size:18px;margin:0 0 10px">Reprends là où tu t'étais arrêtée</h2>
+          <div onClick="{{ openResume }}" style="position:relative;display:flex;align-items:center;gap:14px;padding:12px;border-radius:28px;background:var(--color-surface);cursor:pointer;box-shadow:var(--shadow-sm)">
+            <div class="washed" style="width:104px;height:78px;border-radius:20px;overflow:hidden;flex:none">
+              <img src="uploads/photos-1789457051065-1k45.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:60% 55%">
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:15px;font-weight:600">Yoga doux du soir</div>
+              <div style="font-size:13px;color:var(--color-neutral-600);margin-top:2px">20 min</div>
+            </div>
+            <span style="width:42px;height:42px;border-radius:999px;background:var(--color-accent-2-700);color:#fff;display:flex;align-items:center;justify-content:center;flex:none;margin-right:6px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">
+            <h2 style="font-size:18px;margin:0">Nos programmes</h2>
+            <button onClick="{{ goExplorer }}" style="border:0;background:none;font-family:var(--font-body);font-size:13px;color:var(--color-accent-700);cursor:pointer">Voir tout</button>
+          </div>
+          <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none">
+            <sc-for list="{{ programmes }}" as="p" hint-placeholder-count="3">
+              <div onClick="{{ p.go }}" style="width:176px;flex:none;border-radius:26px;background:var(--color-neutral-100);border:1px solid var(--color-divider);overflow:hidden;cursor:pointer">
+                <div style="position:relative;height:112px;background:var(--color-neutral-200);display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                  <sc-if value="{{ p.locked }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:999px;background:rgba(32,30,29,.62);color:#fff;display:flex;align-items:center;justify-content:center">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                    </span>
+                  </sc-if>
+                </div>
+                <div style="padding:11px 13px 14px">
+                  <div style="font-size:14px;font-weight:600;line-height:1.25">{{ p.title }}</div>
+                  <div style="font-size:12px;color:var(--color-neutral-600);margin-top:3px">{{ p.meta }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+          <div onClick="{{ goPaywall }}" style="display:flex;align-items:center;gap:13px;padding:16px 18px;border-radius:28px;background:var(--color-accent-100);border:1px solid var(--color-accent-300);cursor:pointer">
+            <span style="width:38px;height:38px;border-radius:999px;background:var(--color-accent-600);color:#fff;display:flex;align-items:center;justify-content:center;flex:none">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+            </span>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--color-accent-800)">Débloque tous les cours</div>
+              <div style="font-size:12.5px;color:var(--color-accent-800);opacity:.85">12 € / mois ou 99 € / an</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-800)" stroke-width="2.6" stroke-linecap="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isExplorer }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:16px">
+        <div style="font-size:14px;color:var(--color-neutral-600)">Explorer</div>
+        <h1 style="font-size:25px;margin:0">Nos univers</h1>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <sc-for list="{{ univers }}" as="u" hint-placeholder-count="10">
+            <div onClick="{{ u.go }}" style="position:relative;height:96px;border-radius:24px;overflow:hidden;cursor:pointer;display:flex;align-items:flex-end;padding:12px 13px;background: {{ u.bg }};color: {{ u.fg }}" style-hover="filter:brightness(.96)">
+              <span style="font-size:14px;font-weight:700;line-height:1.2;position:relative;z-index:2">{{ u.label }}</span>
+              <span style="position:absolute;right:-16px;top:-16px;width:74px;height:74px;border-radius:999px;background:rgba(255,255,255,.28)"></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isCategorie }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:2px 0 26px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:center;gap:12px;padding:6px 20px 0">
+          <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:999px;border:1px solid var(--color-divider);background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+          <h1 style="font-size:20px;margin:0">Auto-massages</h1>
+        </div>
+
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 20px 2px;scrollbar-width:none">
+          <sc-for list="{{ catFilters }}" as="f" hint-placeholder-count="5">
+            <button onClick="{{ f.go }}" style="flex:none;border:1px solid var(--color-divider);border-radius:999px;padding:7px 16px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;background: {{ f.bg }};color: {{ f.fg }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+
+        <div style="padding:0 20px">
+          <h2 style="font-size:17px;margin:0 0 10px">À la une</h2>
+          <div onClick="{{ openFeature }}" style="position:relative;height:150px;border-radius:26px;overflow:hidden;cursor:pointer">
+            <img class="washed" src="uploads/photos-1789457051065-1k45.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:30% 40%">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(32,30,29,0) 35%,rgba(32,30,29,.72) 100%)"></div>
+            <div style="position:absolute;left:16px;bottom:14px;color:#fff">
+              <div style="font-size:16px;font-weight:700;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.5)">Drainage lymphatique<br>du visage</div>
+              <div style="font-size:13px;margin-top:4px;text-shadow:0 1px 3px rgba(0,0,0,.5)">15 min</div>
+            </div>
+            <span style="position:absolute;right:14px;bottom:14px;width:40px;height:40px;border-radius:999px;background:#fff;color:var(--color-accent-2-800);display:flex;align-items:center;justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+          </div>
+        </div>
+
+        <div style="padding:0 20px">
+          <h2 style="font-size:17px;margin:0 0 6px">Nouveautés</h2>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <sc-for list="{{ nouveautes }}" as="v" hint-placeholder-count="3">
+              <div onClick="{{ v.go }}" style="display:flex;align-items:center;gap:13px;padding:8px;border-radius:22px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+                <div style="position:relative;width:82px;height:64px;border-radius:18px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                  <sc-if value="{{ v.locked }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;inset:0;border-radius:18px;background:rgba(32,30,29,.45);color:#fff;display:flex;align-items:center;justify-content:center">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                    </span>
+                  </sc-if>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14.5px;font-weight:600">{{ v.title }}</div>
+                  <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ v.meta }}</div>
+                </div>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.6" stroke-linecap="round"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ goRecherche }}" class="btn" style="width:100%;margin-top:14px;background:var(--color-surface);font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px">Voir tout</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isProgramme }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column">
+        <div style="position:relative;height:230px;margin-top:-46px">
+          <img class="washed" src="uploads/photos-1789457051065-1k45.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%">
+          <button onClick="{{ back }}" style="position:absolute;left:18px;top:62px;width:36px;height:36px;border-radius:999px;border:0;background:rgba(249,244,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+        </div>
+        <div style="margin-top:-30px;position:relative;z-index:2;background:var(--color-neutral-100);border-radius:30px 30px 0 0;padding:42px 20px 28px;box-shadow:0 -10px 28px rgba(46,43,37,.14);display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div class="card-kicker">Programme</div>
+            <h1 style="font-size:26px;margin:6px 0 8px">Yoga prénatal</h1>
+            <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--color-neutral-700)">Un programme complet pour vivre une grossesse sereine et en pleine forme.</p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span class="tag tag-neutral">10 séances</span>
+            <span class="tag tag-neutral">20 à 30 min</span>
+            <span class="tag tag-neutral">Tous niveaux</span>
+          </div>
+          <button onClick="{{ startProgramme }}" class="btn" style="background:var(--color-accent-2-700);color:#fff;padding:14px;font-size:15px;width:100%">{{ programmeCta }}</button>
+          <div>
+            <h2 style="font-size:18px;margin:6px 0 8px">Séances</h2>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <sc-for list="{{ seances }}" as="s" hint-placeholder-count="4">
+                <div onClick="{{ s.go }}" style="display:flex;align-items:center;gap:13px;padding:8px;border-radius:22px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+                  <div style="position:relative;width:64px;height:56px;border-radius:16px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                    <sc-if value="{{ s.locked }}" hint-placeholder-val="{{ false }}">
+                      <span style="position:absolute;inset:0;border-radius:16px;background:rgba(32,30,29,.45);color:#fff;display:flex;align-items:center;justify-content:center">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                      </span>
+                    </sc-if>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:14.5px;font-weight:600">{{ s.title }}</div>
+                    <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ s.meta }}</div>
+                  </div>
+                  <span style="width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none;background: {{ s.dotBg }};color: {{ s.dotFg }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isRecherche }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 0 26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px;padding:0 20px">
+          <div style="flex:1;display:flex;align-items:center;gap:9px;background:var(--color-surface);border-radius:999px;padding:11px 16px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-600)" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4-4"></path></svg>
+            <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="Rechercher un cours" style="flex:1;min-width:0;border:0;background:none;outline:none;font-family:var(--font-body);font-size:14px;color:var(--color-text)">
+            <button onClick="{{ clearQuery }}" style="border:0;background:none;padding:0;cursor:pointer;display:flex;color:var(--color-neutral-600)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          <span style="width:42px;height:42px;border-radius:999px;background:var(--color-surface);display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M3 6h18M6 12h12M10 18h4"></path></svg>
+          </span>
+        </div>
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 20px;scrollbar-width:none">
+          <sc-for list="{{ searchTabs }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.go }}" style="flex:none;border:1px solid var(--color-divider);border-radius:999px;padding:7px 15px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;background: {{ t.bg }};color: {{ t.fg }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:18px">
+          <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="3">
+            <div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px">
+                <h2 style="font-size:17px;margin:0">{{ g.title }}</h2>
+                <span style="font-size:12.5px;color:var(--color-accent-700)">Voir tout</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <sc-for list="{{ g.items }}" as="v" hint-placeholder-count="3">
+                  <div onClick="{{ v.go }}" style="display:flex;align-items:center;gap:13px;padding:7px;border-radius:20px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+                    <div style="position:relative;width:72px;height:54px;border-radius:16px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                      <sc-if value="{{ v.locked }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute;inset:0;border-radius:16px;background:rgba(32,30,29,.45);color:#fff;display:flex;align-items:center;justify-content:center">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                        </span>
+                      </sc-if>
+                    </div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:14px;font-weight:600;line-height:1.3">{{ v.title }}</div>
+                      <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ v.meta }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isLecteur }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;height:100%">
+        <div style="position:relative;flex:1;min-height:420px;margin-top:-46px">
+          <img src="uploads/photos-1789457051065-1k45.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:45% 60%">
+          <button onClick="{{ back }}" style="position:absolute;left:18px;top:62px;width:36px;height:36px;border-radius:999px;border:0;background:rgba(249,244,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+          <button onClick="{{ toggleFav }}" style="position:absolute;right:18px;top:62px;width:36px;height:36px;border-radius:999px;border:0;background:rgba(249,244,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;color: {{ favColor }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ favFill }}" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+          </button>
+        </div>
+        <div style="margin-top:-32px;background:var(--color-neutral-100);border-radius:32px 32px 0 0;padding:42px 22px 26px;position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;position:relative">
+          <div>
+            <h1 style="font-size:24px;margin:0 0 4px">{{ playing.title }}</h1>
+            <div style="font-size:14px;color:var(--color-neutral-600)">{{ playing.meta }}</div>
+          </div>
+          <div>
+            <div onClick="{{ seek }}" style="position:relative;height:6px;border-radius:999px;background:var(--color-neutral-300);cursor:pointer">
+              <div style="position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--color-accent-2-600);width: {{ progressPct }}"></div>
+              <div style="position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:999px;background:var(--color-accent-2-700);left: {{ progressPct }}"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-neutral-600);margin-top:7px">
+              <span>{{ elapsed }}</span><span>{{ total }}</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:28px">
+            <button onClick="{{ rewind }}" style="border:0;background:none;cursor:pointer;display:flex;color:var(--color-text)">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20a9 9 0 1 0-8.5-12"></path><path d="M2.5 4v4h4"></path><text x="12" y="16" font-size="8" font-family="Figtree" text-anchor="middle" fill="currentColor" stroke="none">15</text></svg>
+            </button>
+            <button onClick="{{ togglePlay }}" style="width:70px;height:70px;border-radius:999px;border:0;background:var(--color-accent-2-700);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-md)" dangerouslySetInnerHTML="{{ playIcon }}"></button>
+            <button onClick="{{ forward }}" style="border:0;background:none;cursor:pointer;display:flex;color:var(--color-text)">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 20a9 9 0 1 1 8.5-12"></path><path d="M21.5 4v4h-4"></path><text x="12" y="16" font-size="8" font-family="Figtree" text-anchor="middle" fill="currentColor" stroke="none">15</text></svg>
+            </button>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 8px 0;color:var(--color-neutral-700)">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>Liste</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 21h16"></path></svg>Télécharger</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><path d="m12 15 5 6H7z"></path></svg>AirPlay</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg>Plus</div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isArticle }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 28px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:999px;border:1px solid var(--color-divider);background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;color:var(--color-neutral-600);margin-bottom:8px">Comprendre son corps</div>
+          <h1 style="font-size:25px;margin:0 0 12px">Pourquoi ai-je mal au dos ?</h1>
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <p style="margin:0;flex:1;font-size:14.5px;line-height:1.55;color:var(--color-neutral-700)">Camille, ostéopathe, vous explique les causes les plus fréquentes et comment les soulager durablement.</p>
+            <button onClick="{{ openArticleVideo }}" style="width:52px;height:52px;border-radius:999px;border:0;background:var(--color-accent-2-700);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" dangerouslySetInnerHTML="{{ articleBtnIcon }}"></button>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:var(--color-neutral-600)">
+            <span>8 min</span><span>Camille, ostéopathe</span>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--color-divider)"></div>
+        <div>
+          <h2 style="font-size:17px;margin:0 0 10px">Dans la même catégorie</h2>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+              <div onClick="{{ r.go }}" style="display:flex;align-items:center;gap:13px;padding:7px;border-radius:20px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+                <div style="position:relative;width:70px;height:54px;border-radius:16px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                  <sc-if value="{{ r.locked }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;inset:0;border-radius:16px;background:rgba(32,30,29,.45);color:#fff;display:flex;align-items:center;justify-content:center">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                    </span>
+                  </sc-if>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;line-height:1.3">{{ r.title }}</div>
+                  <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ r.meta }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isPratique }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:18px">
+        <h1 style="font-size:25px;margin:0">Ma pratique</h1>
+        <div style="background:var(--color-surface);border-radius:28px;padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+            <div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">Cette semaine</div>
+              <div style="display:flex;align-items:baseline;gap:14px;margin-top:6px">
+                <div><span style="font-family:var(--font-heading);font-size:24px">4</span> <span style="font-size:13px">séances</span></div>
+                <div><span style="font-family:var(--font-heading);font-size:24px">2h 35</span> <span style="font-size:13px">min</span></div>
+              </div>
+            </div>
+            <svg width="74" height="74" viewBox="0 0 74 74">
+              <circle cx="37" cy="37" r="30" fill="none" stroke="var(--color-neutral-300)" stroke-width="8"></circle>
+              <circle cx="37" cy="37" r="30" fill="none" stroke="var(--color-accent-2-600)" stroke-width="8" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="61" transform="rotate(-90 37 37)"></circle>
+            </svg>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--color-neutral-700);margin-bottom:6px">
+              <span>Objectif hebdomadaire</span><span>5h / 3h</span>
+            </div>
+            <div style="height:8px;border-radius:999px;background:var(--color-neutral-300);overflow:hidden">
+              <div style="height:100%;width:100%;background:var(--color-accent-2-600);border-radius:999px"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-size:18px;margin:0 0 8px">Mes routines</h2>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <sc-for list="{{ routines }}" as="r" hint-placeholder-count="2">
+              <div onClick="{{ r.go }}" style="display:flex;align-items:center;gap:13px;padding:8px;border-radius:22px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+                <div style="width:74px;height:58px;border-radius:18px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14.5px;font-weight:600">{{ r.title }}</div>
+                  <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ r.meta }}</div>
+                </div>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.6" stroke-linecap="round"><path d="m9 18 6-6-6-6"></path></svg>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-size:18px;margin:0 0 8px">Cette semaine</h2>
+          <div style="display:flex;justify-content:space-between;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:26px;padding:16px 14px">
+            <sc-for list="{{ week }}" as="d" hint-placeholder-count="7">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+                <span style="font-size:11.5px;color:var(--color-neutral-600)">{{ d.label }}</span>
+                <span style="width:26px;height:26px;border-radius:999px;background: {{ d.bg }}"></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isExperts }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:999px;border:1px solid var(--color-divider);background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+          <h1 style="font-size:22px;margin:0">Nos experts</h1>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <sc-for list="{{ experts }}" as="e" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:14px;padding:9px;border-radius:24px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+              <div style="width:56px;height:56px;border-radius:999px;background:var(--color-accent-2-200);color:var(--color-accent-2-800);flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:19px">{{ e.initial }}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:15px;font-weight:600">{{ e.name }}</div>
+                <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ e.role }}</div>
+              </div>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.6" stroke-linecap="round"><path d="m9 18 6-6-6-6"></path></svg>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isFavoris }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:16px">
+        <h1 style="font-size:25px;margin:0">Favoris</h1>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <sc-for list="{{ favoris }}" as="v" hint-placeholder-count="3">
+            <div onClick="{{ v.go }}" style="display:flex;align-items:center;gap:13px;padding:8px;border-radius:22px;cursor:pointer" style-hover="background:var(--color-neutral-200)">
+              <div style="position:relative;width:78px;height:60px;border-radius:18px;background:var(--color-neutral-200);flex:none;display:flex;align-items:center;justify-content:center;color:var(--color-neutral-400)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="9" cy="9" r="1.6"></circle><path d="m21 15-5-5-9 9"></path></svg>
+                <sc-if value="{{ v.locked }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;inset:0;border-radius:18px;background:rgba(32,30,29,.45);color:#fff;display:flex;align-items:center;justify-content:center">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"></path></svg>
+                  </span>
+                </sc-if>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">{{ v.title }}</div>
+                <div style="font-size:12.5px;color:var(--color-neutral-600);margin-top:2px">{{ v.meta }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isProfil }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 20px 26px;display:flex;flex-direction:column;gap:18px">
+        <h1 style="font-size:25px;margin:0">Profil</h1>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:62px;height:62px;border-radius:999px;background:var(--color-accent-200);color:var(--color-accent-800);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:22px">{{ initial }}</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:17px;font-weight:700">{{ name }}</span>
+              <sc-if value="{{ isAdminUser }}" hint-placeholder-val="{{ true }}">
+                <span class="tag" style="background:var(--color-neutral-800);color:#fff">Admin</span>
+              </sc-if>
+            </div>
+            <div style="font-size:13px;color:var(--color-neutral-600)">Membre depuis mars 2026</div>
+          </div>
+        </div>
+        <div style="border-radius:28px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;background: {{ subCardBg }};border:1px solid {{ subCardBorder }}">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color: {{ subCardInk }}">Abonnement</span>
+            <span class="tag" style="background: {{ subTagBg }};color:#fff">{{ subTag }}</span>
+          </div>
+          <div style="font-size:14.5px;color: {{ subCardInk }}">{{ subLine }}</div>
+          <button onClick="{{ subAction }}" class="btn" style="background: {{ subBtnBg }};color:#fff;padding:12px;font-size:14px">{{ subBtnLabel }}</button>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ profilRows }}" as="r" hint-placeholder-count="5">
+            <div onClick="{{ r.go }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 4px;border-bottom:1px solid var(--color-divider);cursor:pointer;font-size:14.5px">
+              <span>{{ r.label }}</span>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.6" stroke-linecap="round"><path d="m9 18 6-6-6-6"></path></svg>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 0 26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px;padding:0 20px">
+          <button onClick="{{ back }}" style="width:36px;height:36px;border-radius:999px;border:1px solid var(--color-divider);background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          </button>
+          <h1 style="font-size:21px;margin:0">Administration</h1>
+          <span class="tag" style="background:var(--color-neutral-700);color:#fff;margin-left:auto">Admin</span>
+        </div>
+
+        <div style="display:flex;gap:8px;overflow-x:auto;padding:0 20px 2px;scrollbar-width:none">
+          <sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.go }}" style="flex:none;border:1px solid var(--color-divider);border-radius:999px;padding:7px 15px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;background: {{ t.bg }};color: {{ t.fg }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ adminCours }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="background:var(--color-surface);border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:11px">
+            <div style="font-size:15px;font-weight:700">Ajouter un cours vidéo</div>
+            <input value="{{ ncTitle }}" onChange="{{ setNcTitle }}" placeholder="Titre du cours" class="input" style="font-family:var(--font-body);background:var(--color-neutral-100)">
+            <div style="display:flex;gap:9px">
+              <input value="{{ ncDuration }}" onChange="{{ setNcDuration }}" placeholder="Durée (min)" class="input" style="font-family:var(--font-body);background:var(--color-neutral-100);flex:1;min-width:0">
+              <select value="{{ ncUnivers }}" onChange="{{ setNcUnivers }}" class="input" style="font-family:var(--font-body);background:var(--color-neutral-100);flex:1;min-width:0;cursor:pointer">
+                <option>Yoga</option>
+                <option>Auto-massages</option>
+                <option>Respiration</option>
+                <option>Comprendre son corps</option>
+                <option>Sommeil</option>
+                <option>Nutrition</option>
+              </select>
+            </div>
+            <div onClick="{{ toggleNcPremium }}" style="display:flex;align-items:center;gap:11px;padding:10px 4px;cursor:pointer">
+              <span style="width:44px;height:26px;border-radius:999px;padding:3px;display:flex;flex:none;background: {{ ncPremiumBg }};justify-content: {{ ncPremiumJustify }}">
+                <span style="width:20px;height:20px;border-radius:999px;background:#fff"></span>
+              </span>
+              <span style="font-size:13.5px">Réservé aux abonnées</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:13px;border:1px dashed var(--color-neutral-400);border-radius:22px;font-size:13px;color:var(--color-neutral-600)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 20h16"></path></svg>
+              Déposer le fichier vidéo
+            </div>
+            <button onClick="{{ addCourse }}" class="btn" style="background:var(--color-accent-600);color:#fff;padding:12px;font-size:14px">Publier le cours</button>
+          </div>
+
+          <div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+              <h2 style="font-size:17px;margin:0">Catalogue</h2>
+              <span style="font-size:12.5px;color:var(--color-neutral-600)">{{ courseCount }} cours</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <sc-for list="{{ courses }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:22px;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:14px;font-weight:600;line-height:1.3">{{ c.title }}</div>
+                    <div style="font-size:12px;color:var(--color-neutral-600);margin-top:2px">{{ c.meta }}</div>
+                  </div>
+                  <button onClick="{{ c.togglePremium }}" class="tag" style="border:0;cursor:pointer;font-family:var(--font-body);background: {{ c.tagBg }};color: {{ c.tagFg }}">{{ c.tagLabel }}</button>
+                  <button onClick="{{ c.remove }}" style="border:0;background:none;cursor:pointer;display:flex;color:var(--color-neutral-600);padding:2px">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M6 7l1 13h10l1-13"></path></svg>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ adminProgrammes }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="background:var(--color-surface);border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:11px">
+            <div style="font-size:15px;font-weight:700">Nouveau programme</div>
+            <input value="{{ npTitle }}" onChange="{{ setNpTitle }}" placeholder="Nom du programme" class="input" style="font-family:var(--font-body);background:var(--color-neutral-100)">
+            <input value="{{ npDesc }}" onChange="{{ setNpDesc }}" placeholder="Description courte" class="input" style="font-family:var(--font-body);background:var(--color-neutral-100)">
+            <button onClick="{{ addProgram }}" class="btn" style="background:var(--color-accent-600);color:#fff;padding:12px;font-size:14px">Créer le programme</button>
+          </div>
+
+          <div>
+            <h2 style="font-size:17px;margin:0 0 8px">Programmes</h2>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ adminPrograms }}" as="p" hint-placeholder-count="3">
+                <div style="border-radius:26px;background:var(--color-neutral-100);border:1px solid var(--color-divider);overflow:hidden">
+                  <div onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer">
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:14.5px;font-weight:600">{{ p.title }}</div>
+                      <div style="font-size:12px;color:var(--color-neutral-600);margin-top:2px">{{ p.meta }}</div>
+                    </div>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.6" stroke-linecap="round" style="transform: {{ p.caret }}"><path d="m9 18 6-6-6-6"></path></svg>
+                  </div>
+                  <sc-if value="{{ p.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:6px">
+                      <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600);padding:4px 0 2px">Vidéos liées</div>
+                      <sc-for list="{{ p.links }}" as="l" hint-placeholder-count="4">
+                        <div onClick="{{ l.toggle }}" style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:18px;cursor:pointer;background: {{ l.bg }}">
+                          <span style="width:20px;height:20px;border-radius:6px;flex:none;display:flex;align-items:center;justify-content:center;border:2px solid {{ l.border }};background: {{ l.fill }};color:#fff">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                          </span>
+                          <span style="flex:1;min-width:0;font-size:13.5px">{{ l.title }}</span>
+                          <span style="font-size:12px;color:var(--color-neutral-600)">{{ l.duration }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ adminUsers }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:9px">
+            <sc-for list="{{ userStats }}" as="k" hint-placeholder-count="2">
+              <div style="flex:1;background:var(--color-surface);border-radius:24px;padding:14px 16px">
+                <div style="font-family:var(--font-heading);font-size:22px">{{ k.value }}</div>
+                <div style="font-size:12px;color:var(--color-neutral-700);margin-top:2px">{{ k.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <sc-for list="{{ users }}" as="u" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:24px;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+                <span style="width:38px;height:38px;border-radius:999px;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:15px;background:var(--color-accent-2-200);color:var(--color-accent-2-800)">{{ u.initial }}</span>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600">{{ u.name }}</div>
+                  <div style="font-size:11.5px;color:var(--color-neutral-600);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ u.email }}</div>
+                </div>
+                <button onClick="{{ u.cyclePlan }}" class="tag" style="border:0;cursor:pointer;font-family:var(--font-body);background: {{ u.planBg }};color: {{ u.planFg }}">{{ u.plan }}</button>
+                <button onClick="{{ u.toggle }}" style="border:0;background:none;cursor:pointer;display:flex;padding:2px;color: {{ u.stateColor }}" dangerouslySetInnerHTML="{{ u.icon }}"></button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12px;color:var(--color-neutral-600);line-height:1.5">Touchez l'étiquette pour changer de formule, l'icône pour suspendre ou réactiver le compte.</div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ adminSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="background:var(--color-accent-2-100);border:1px solid var(--color-accent-2-300);border-radius:28px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-accent-2-800)">Revenus récurrents</div>
+            <div style="display:flex;align-items:baseline;gap:8px">
+              <span style="font-family:var(--font-heading);font-size:30px;color:var(--color-accent-2-900)">{{ mrr }}</span>
+              <span style="font-size:13px;color:var(--color-accent-2-800)">/ mois estimés</span>
+            </div>
+            <div style="display:flex;gap:18px;font-size:12.5px;color:var(--color-accent-2-800)">
+              <span>{{ activeCount }} abonnées actives</span>
+              <span>{{ trialCount }} en essai</span>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size:17px;margin:0 0 8px">Formules</h2>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ adminPlans }}" as="p" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:26px;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:14.5px;font-weight:600">{{ p.title }}</div>
+                    <div style="font-size:12px;color:var(--color-neutral-600);margin-top:2px">{{ p.meta }}</div>
+                  </div>
+                  <input value="{{ p.price }}" onChange="{{ p.setPrice }}" class="input" style="font-family:var(--font-body);width:78px;text-align:center;background:var(--color-surface)">
+                  <button onClick="{{ p.toggle }}" style="width:44px;height:26px;border-radius:999px;border:0;padding:3px;display:flex;flex:none;cursor:pointer;background: {{ p.switchBg }};justify-content: {{ p.switchJustify }}">
+                    <span style="width:20px;height:20px;border-radius:999px;background:#fff"></span>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size:17px;margin:0 0 8px">Essai gratuit</h2>
+            <div style="display:flex;gap:8px">
+              <sc-for list="{{ trialOptions }}" as="t" hint-placeholder-count="3">
+                <button onClick="{{ t.go }}" style="flex:1;border:1px solid var(--color-divider);border-radius:999px;padding:10px 0;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;background: {{ t.bg }};color: {{ t.fg }}">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isPaywall }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:6px 22px 30px;display:flex;flex-direction:column;gap:18px;min-height:100%;background:var(--color-bg)">
+        <div style="display:flex;justify-content:flex-end">
+          <button onClick="{{ back }}" style="width:34px;height:34px;border-radius:999px;border:0;background:var(--color-neutral-200);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div style="display:flex;justify-content:center">
+          <span style="width:64px;height:64px;border-radius:999px;background:var(--color-accent-600);color:#fff;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"></rect><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0"></path></svg>
+          </span>
+        </div>
+        <div style="text-align:center">
+          <h1 style="font-size:26px;margin:0 0 8px">Accès illimité</h1>
+          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--color-neutral-700)">Tous les cours, programmes et auto-massages, sans limite et hors connexion.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ plans }}" as="p" hint-placeholder-count="2">
+            <div onClick="{{ p.go }}" style="display:flex;align-items:center;gap:13px;padding:16px 18px;border-radius:26px;cursor:pointer;background: {{ p.bg }};border:2px solid {{ p.border }}">
+              <span style="width:22px;height:22px;border-radius:999px;border:2px solid {{ p.border }};display:flex;align-items:center;justify-content:center;flex:none">
+                <span style="width:11px;height:11px;border-radius:999px;background: {{ p.dot }}"></span>
+              </span>
+              <div style="flex:1">
+                <div style="font-size:15px;font-weight:700">{{ p.title }}</div>
+                <div style="font-size:12.5px;color:var(--color-neutral-700);margin-top:2px">{{ p.note }}</div>
+              </div>
+              <div style="font-family:var(--font-heading);font-size:20px">{{ p.price }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;padding:2px 4px">
+          <sc-for list="{{ perks }}" as="k" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-2-600)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              <span>{{ k }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <button onClick="{{ subscribe }}" class="btn" style="background:var(--color-accent-600);color:#fff;padding:15px;font-size:15px;width:100%">{{ subscribeLabel }}</button>
+        <div style="text-align:center;font-size:11.5px;color:var(--color-neutral-600);line-height:1.5">Sans engagement, résiliable à tout moment.<br>Renouvellement automatique.</div>
+      </div>
+      </sc-if>
+
+    </div>
+
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:none;display:flex;justify-content:space-between;padding:9px 16px 6px;background:var(--color-neutral-100);border-top:1px solid var(--color-divider)">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <button onClick="{{ t.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none;cursor:pointer;padding:4px 0;font-family:var(--font-body);font-size:10.5px;font-weight:600;color: {{ t.color }}">
+          <span dangerouslySetInnerHTML="{{ t.icon }}"></span>
+          <span>{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="flex:none;display:flex;justify-content:center;padding:2px 0 8px;background:var(--color-neutral-100)">
+      <span style="width:128px;height:5px;border-radius:999px;background:var(--color-neutral-400)"></span>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:20px;right:20px;bottom:96px;background:var(--color-accent-2-700);color:#fff;border-radius:22px;padding:13px 18px;font-size:13.5px;text-align:center;box-shadow:var(--shadow-lg)">{{ toast }}</div>
+    </sc-if>
+  </div>
+
+  <div style="font-size:12.5px;color:var(--color-neutral-600);max-width:520px;text-align:center;line-height:1.6">Les vignettes grises sont des emplacements photo — déposez vos images pour les remplir. Les cadenas mènent à l'écran d'abonnement.</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;memberName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Estelle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;startSubscribed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;isAdmin&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const ACC2 = 'var(--color-accent-2-700)';
+const INK = 'var(--color-neutral-600)';
+
+const html = (s) => ({ __html: s });
+const ICON = {
+  home: html('<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20z"/><path d="M9.5 21.5V14h5v7.5"/></svg>'),
+  search: html('<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.2-4.2"/></svg>'),
+  pulse: html('<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'),
+  heart: html('<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></svg>'),
+  user: html('<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21v-1.5A4.5 4.5 0 0 0 15.5 15h-7A4.5 4.5 0 0 0 4 19.5V21"/></svg>')
+};
+const mi = (d) => html('<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>');
+
+const MOODS = [
+  ['Stressée', '<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>'],
+  ['Fatiguée', '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/>'],
+  ["Manque d'énergie", '<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>'],
+  ['Mal au dos', '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'],
+  ['Envie de bouger', '<path d="M12 3v18"/><path d="M3 12h18"/><path d="m7 7 10 10"/><path d="m17 7-10 10"/>'],
+  ['Besoin de ralentir', '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/>'],
+  ['Je veux méditer', '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.5"/>'],
+  ['Autre besoin', '<path d="M12 5v14"/><path d="M5 12h14"/>']
+];
+
+const UNIVERS = [
+  ['Yoga', 'var(--color-accent-2-300)', 'var(--color-accent-2-900)', 'categorie'],
+  ['Bains sonores', 'var(--color-accent-300)', 'var(--color-accent-900)', 'categorie'],
+  ['Respiration', 'var(--color-neutral-300)', 'var(--color-neutral-900)', 'categorie'],
+  ['Auto-massages', 'var(--color-accent-200)', 'var(--color-accent-900)', 'categorie'],
+  ['Comprendre son corps', 'var(--color-accent-2-200)', 'var(--color-accent-2-900)', 'article'],
+  ['Santé de la femme', 'var(--color-accent-300)', 'var(--color-accent-900)', 'programme'],
+  ['Nutrition', 'var(--color-accent-2-400)', 'var(--color-accent-2-900)', 'categorie'],
+  ['Sommeil', 'var(--color-neutral-700)', '#f9f4ed', 'categorie'],
+  ['Mental & émotions', 'var(--color-neutral-200)', 'var(--color-neutral-900)', 'categorie'],
+  ['Podcasts', 'var(--color-accent-100)', 'var(--color-accent-900)', 'categorie']
+];
+
+class Component extends DCLogic {
+  state = {
+    screen: 'accueil', tab: 'accueil', stack: [],
+    subscribed: false, playing: true, plan: 'annuel',
+    progress: 0.29, query: 'Mal au dos', catFilter: 'Tous', searchTab: 'Tout',
+    fav: true, started: false, toast: '',
+    adminTab: 'cours',
+    nc: { title: '', duration: '', univers: 'Yoga', premium: true },
+    np: { title: '', desc: '' },
+    openProgram: 'p1',
+    courses: [
+      { id: 'c1', title: 'Yoga doux du soir', duration: '20 min', univers: 'Yoga', premium: false },
+      { id: 'c2', title: 'Soulager le bas du dos', duration: '20 min', univers: 'Yoga', premium: true },
+      { id: 'c3', title: 'Respirer & se connecter', duration: '22 min', univers: 'Respiration', premium: false },
+      { id: 'c4', title: 'Ouvrir le bassin', duration: '28 min', univers: 'Yoga', premium: true },
+      { id: 'c5', title: 'Drainage lymphatique du visage', duration: '15 min', univers: 'Auto-massages', premium: true },
+      { id: 'c6', title: 'Pourquoi ai-je mal au dos ?', duration: '8 min', univers: 'Comprendre son corps', premium: false }
+    ],
+    progs: [
+      { id: 'p1', title: 'Yoga prénatal', desc: 'Grossesse sereine', videos: ['c3', 'c2', 'c4'] },
+      { id: 'p2', title: 'Dos serein', desc: '8 séances ciblées', videos: ['c2', 'c6'] },
+      { id: 'p3', title: 'Sommeil profond', desc: 'Rituels du soir', videos: ['c1'] }
+    ],
+    users: [
+      { id: 'u1', name: 'Estelle Marchand', email: 'estelle@yogella.fr', plan: 'Annuel', active: true },
+      { id: 'u2', name: 'Léa Fontaine', email: 'lea.fontaine@gmail.com', plan: 'Mensuel', active: true },
+      { id: 'u3', name: 'Sarah Benali', email: 'sarah.benali@gmail.com', plan: 'Essai', active: true },
+      { id: 'u4', name: 'Claire Dupuis', email: 'claire.dupuis@outlook.fr', plan: 'Aucun', active: false }
+    ],
+    planRows: [
+      { id: 'mensuel', title: 'Mensuel', price: '12 €', count: 486, on: true },
+      { id: 'annuel', title: 'Annuel', price: '99 €', count: 312, on: true }
+    ],
+    trial: '7 jours',
+    video: { title: 'Yoga doux du soir', meta: '20 min', total: '20:00' }
+  };
+
+  componentDidMount() {
+    if (this.props.startSubscribed) this.setState({ subscribed: true });
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  go = (screen) => {
+    const tabs = ['accueil', 'recherche', 'pratique', 'favoris', 'profil'];
+    this.setState(s => ({
+      screen,
+      tab: tabs.indexOf(screen) >= 0 ? screen : s.tab,
+      stack: screen === s.screen ? s.stack : s.stack.concat([s.screen]).slice(-12)
+    }));
+  };
+  back = () => this.setState(s => ({ screen: s.stack.length ? s.stack[s.stack.length - 1] : 'accueil', stack: s.stack.slice(0, -1) }));
+
+  setNc = (k, v) => this.setState(p => ({ nc: { ...p.nc, [k]: v } }));
+
+  flash = (msg) => { clearTimeout(this._t); this.setState({ toast: msg }); this._t = setTimeout(() => this.setState({ toast: '' }), 2200); };
+
+  open = (item) => {
+    if (item.premium && !this.state.subscribed) { this.flash('Cours réservé aux abonnées'); this.go('paywall'); return; }
+    this.setState({ video: { title: item.title, meta: item.meta, total: item.total || '20:00' }, progress: 0.29, playing: true });
+    this.go('lecteur');
+  };
+
+  deco(list) {
+    return list.map(it => ({ ...it, locked: !!it.premium && !this.state.subscribed, go: () => this.open(it) }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const sub = s.subscribed;
+    const name = this.props.memberName ?? 'Estelle';
+    const admin = this.props.isAdmin ?? true;
+
+    const navItems = [
+      ['accueil', 'Accueil'], ['explorer', 'Explorer'], ['categorie', 'Auto-massages'],
+      ['programme', 'Programme'], ['recherche', 'Recherche'], ['lecteur', 'Lecteur'],
+      ['article', 'Article'], ['pratique', 'Ma pratique'], ['experts', 'Experts'],
+      ['favoris', 'Favoris'], ['profil', 'Profil'], ['paywall', 'Abonnement'],
+      ['admin', 'Administration']
+    ].map(([id, label]) => ({
+      label, go: () => this.go(id),
+      bg: s.screen === id ? 'var(--color-accent-600)' : 'var(--color-neutral-100)',
+      fg: s.screen === id ? '#fff' : 'var(--color-text)'
+    }));
+
+    const tabs = [
+      ['accueil', 'Accueil', ICON.home], ['recherche', 'Recherche', ICON.search],
+      ['pratique', 'Ma pratique', ICON.pulse], ['favoris', 'Favoris', ICON.heart],
+      ['profil', 'Profil', ICON.user]
+    ].map(([id, label, icon]) => ({
+      label, icon, go: () => this.go(id),
+      color: s.tab === id && ['accueil', 'recherche', 'pratique', 'favoris', 'profil'].indexOf(s.screen) >= 0 ? ACC2 : INK
+    }));
+
+    const catFilters = ['Tous', 'Visage', 'Corps', 'Drainage', 'Récupération'].map(label => ({
+      label, go: () => this.setState({ catFilter: label }),
+      bg: s.catFilter === label ? 'var(--color-accent-2-700)' : 'transparent',
+      fg: s.catFilter === label ? '#fff' : 'var(--color-text)'
+    }));
+
+    const searchTabs = ['Tout', 'Yoga', 'Auto-massages', 'Comprendre son corps'].map(label => ({
+      label, go: () => this.setState({ searchTab: label }),
+      bg: s.searchTab === label ? 'var(--color-accent-2-700)' : 'transparent',
+      fg: s.searchTab === label ? '#fff' : 'var(--color-text)'
+    }));
+
+    const seancesRaw = [
+      { title: '1. Respirer & se connecter', meta: '22 min', done: true },
+      { title: '2. Soulager le bas du dos', meta: '25 min', premium: true },
+      { title: '3. Ouvrir le bassin', meta: '28 min', premium: true },
+      { title: '4. Détente profonde', meta: '20 min', premium: true }
+    ];
+
+    const plans = [
+      { id: 'mensuel', title: 'Mensuel', note: 'Sans engagement', price: '12 €' },
+      { id: 'annuel', title: 'Annuel', note: '8,25 € / mois — 2 mois offerts', price: '99 €' }
+    ].map(p => ({
+      ...p, go: () => this.setState({ plan: p.id }),
+      bg: s.plan === p.id ? 'var(--color-accent-100)' : 'var(--color-neutral-100)',
+      border: s.plan === p.id ? 'var(--color-accent-500)' : 'var(--color-divider)',
+      dot: s.plan === p.id ? 'var(--color-accent-600)' : 'transparent'
+    }));
+
+    const elapsedSec = Math.round(s.progress * 1200);
+    const two = n => String(n).padStart(2, '0');
+
+    return {
+      name, initial: name.slice(0, 1),
+      statusLabel: sub ? 'abonnement actif — tout est débloqué' : 'sans abonnement — les cours premium sont verrouillés',
+      nav: navItems, tabs,
+      isAccueil: s.screen === 'accueil', isExplorer: s.screen === 'explorer',
+      isCategorie: s.screen === 'categorie', isProgramme: s.screen === 'programme',
+      isRecherche: s.screen === 'recherche', isLecteur: s.screen === 'lecteur',
+      isArticle: s.screen === 'article', isPratique: s.screen === 'pratique',
+      isExperts: s.screen === 'experts', isFavoris: s.screen === 'favoris',
+      isProfil: s.screen === 'profil', isPaywall: s.screen === 'paywall',
+      isAdmin: s.screen === 'admin',
+      showTabs: ['lecteur', 'paywall', 'programme', 'article', 'admin'].indexOf(s.screen) < 0,
+      notSubscribed: !sub, toast: s.toast,
+      back: this.back,
+      goExplorer: () => this.go('explorer'), goPaywall: () => this.go('paywall'),
+      goRecherche: () => this.go('recherche'),
+
+      moods: MOODS.map(([label, d], i) => ({
+        label, icon: mi(d), span: i === 7 ? 'span 2' : 'span 1',
+        go: () => this.go(label === 'Mal au dos' ? 'recherche' : 'explorer')
+      })),
+
+      openResume: () => this.open({ title: 'Yoga doux du soir', meta: '20 min' }),
+
+      programmes: this.deco([
+        { title: 'Yoga prénatal', meta: '10 séances · 20-30 min' },
+        { title: 'Dos serein', meta: '8 séances · 15 min', premium: true },
+        { title: 'Sommeil profond', meta: '6 séances · 25 min', premium: true }
+      ]).map((p, i) => i === 0 ? { ...p, go: () => this.go('programme') } : p),
+
+      univers: UNIVERS.map(([label, bg, fg, dest]) => ({ label, bg, fg, go: () => this.go(dest) })),
+
+      catFilters,
+      openFeature: () => this.open({ title: 'Drainage lymphatique du visage', meta: '15 min', total: '15:00' }),
+      nouveautes: this.deco([
+        { title: 'Jambes légères', meta: '20 min' },
+        { title: 'Nuque & trapèzes', meta: '15 min', premium: true },
+        { title: 'Ventre & digestion', meta: '18 min', premium: true }
+      ]),
+
+      programmeCta: s.started ? 'Reprendre la séance 2' : 'Commencer le programme',
+      startProgramme: () => { this.setState({ started: true }); this.open(seancesRaw[s.started ? 1 : 0]); },
+      seances: this.deco(seancesRaw).map(x => ({
+        ...x,
+        dotBg: x.done ? 'var(--color-accent-2-700)' : 'var(--color-neutral-200)',
+        dotFg: x.done ? '#fff' : 'var(--color-neutral-500)'
+      })),
+
+      query: s.query, searchTabs,
+      setQuery: (e) => this.setState({ query: e.target.value }),
+      clearQuery: () => this.setState({ query: '' }),
+      searchGroups: [
+        { title: 'Yoga', items: this.deco([
+          { title: 'Soulager le bas du dos', meta: '20 min' },
+          { title: 'Yoga doux spécial dos', meta: '25 min', premium: true },
+          { title: 'Étirements du matin', meta: '15 min', premium: true }
+        ]) },
+        { title: 'Comprendre son corps', items: this.deco([
+          { title: 'Pourquoi ai-je mal au dos ?', meta: '8 min' },
+          { title: 'Les 5 erreurs qui aggravent le mal de dos', meta: '6 min', premium: true }
+        ]).map((x, i) => i === 0 ? { ...x, go: () => this.go('article') } : x) },
+        { title: 'Auto-massages', items: this.deco([
+          { title: 'Auto-massage bas du dos', meta: '15 min', premium: true }
+        ]) }
+      ],
+
+      playing: s.video,
+      progressPct: Math.round(s.progress * 100) + '%',
+      elapsed: two(Math.floor(elapsedSec / 60)) + ':' + two(elapsedSec % 60),
+      total: s.video.total,
+      playIcon: s.playing
+        ? html('<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.4"/><rect x="14" y="4" width="4" height="16" rx="1.4"/></svg>')
+        : html('<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'),
+      togglePlay: () => this.setState(p => ({ playing: !p.playing })),
+      rewind: () => this.setState(p => ({ progress: Math.max(0, p.progress - 0.0125) })),
+      forward: () => this.setState(p => ({ progress: Math.min(1, p.progress + 0.0125) })),
+      seek: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        this.setState({ progress: Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) });
+      },
+      toggleFav: () => this.setState(p => ({ fav: !p.fav })),
+      favColor: s.fav ? 'var(--color-accent-600)' : 'var(--color-text)',
+      favFill: s.fav ? 'var(--color-accent-600)' : 'none',
+
+      articleBtnIcon: (!sub)
+        ? html('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="3"/><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"/></svg>')
+        : html('<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'),
+      openArticleVideo: () => this.open({ title: 'Pourquoi ai-je mal au dos ?', meta: '8 min · Camille, ostéopathe', total: '08:00', premium: true }),
+      related: this.deco([
+        { title: 'Les 5 erreurs qui aggravent le mal de dos', meta: '6 min', premium: true },
+        { title: 'Renforcer ses lombaires', meta: '12 min', premium: true },
+        { title: 'Bien s\u2019asseoir au bureau', meta: '5 min' }
+      ]),
+
+      routines: this.deco([
+        { title: 'Ma routine du matin', meta: '15 min · 3 séances' },
+        { title: 'Détente du soir', meta: '22 min · 4 séances', premium: true }
+      ]),
+      week: ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((label, i) => ({
+        label, bg: [0, 2, 4, 5].indexOf(i) >= 0 ? 'var(--color-accent-2-500)' : 'var(--color-neutral-200)'
+      })),
+
+      experts: [
+        { name: 'Estelle', role: 'Yoga, Méditation, Respiration, Bains sonores', initial: 'E' },
+        { name: 'Virginie', role: 'Naturopathie, Nutrition', initial: 'V' },
+        { name: 'Camille', role: 'Ostéopathie', initial: 'C' },
+        { name: 'Julie', role: 'Sage-femme', initial: 'J' }
+      ],
+
+      favoris: this.deco([
+        { title: 'Yoga doux du soir', meta: '20 min' },
+        { title: 'Drainage lymphatique du visage', meta: '15 min', premium: true },
+        { title: 'Respiration cohérence cardiaque', meta: '5 min' }
+      ]),
+
+      subTag: sub ? 'Actif' : 'Inactif',
+      subTagBg: sub ? 'var(--color-accent-2-700)' : 'var(--color-neutral-600)',
+      subLine: sub ? (s.plan === 'annuel' ? 'Annuel · 99 € — prochaine échéance le 15 mars 2027' : 'Mensuel · 12 € — prochaine échéance le 15 octobre 2026') : 'Aucun abonnement. Les cours premium restent verrouillés.',
+      subCardBg: sub ? 'var(--color-accent-2-100)' : 'var(--color-accent-100)',
+      subCardBorder: sub ? 'var(--color-accent-2-300)' : 'var(--color-accent-300)',
+      subCardInk: sub ? 'var(--color-accent-2-800)' : 'var(--color-accent-800)',
+      subBtnBg: sub ? 'var(--color-neutral-700)' : 'var(--color-accent-600)',
+      subBtnLabel: sub ? 'Gérer mon abonnement' : "S'abonner",
+      subAction: () => { if (sub) { this.setState({ subscribed: false }); this.flash('Abonnement résilié (démo)'); } else this.go('paywall'); },
+      adminTabs: [['cours', 'Cours'], ['programmes', 'Programmes'], ['utilisateurs', 'Utilisateurs'], ['abonnements', 'Abonnements']].map(([id, label]) => ({
+        label, go: () => this.setState({ adminTab: id }),
+        bg: s.adminTab === id ? 'var(--color-neutral-800)' : 'transparent',
+        fg: s.adminTab === id ? '#fff' : 'var(--color-text)'
+      })),
+      adminCours: s.adminTab === 'cours',
+      adminProgrammes: s.adminTab === 'programmes',
+      adminUsers: s.adminTab === 'utilisateurs',
+      adminSubs: s.adminTab === 'abonnements',
+
+      ncTitle: s.nc.title, ncDuration: s.nc.duration, ncUnivers: s.nc.univers,
+      setNcTitle: e => this.setNc('title', e.target.value),
+      setNcDuration: e => this.setNc('duration', e.target.value),
+      setNcUnivers: e => this.setNc('univers', e.target.value),
+      toggleNcPremium: () => this.setNc('premium', !s.nc.premium),
+      ncPremiumBg: s.nc.premium ? 'var(--color-accent-600)' : 'var(--color-neutral-400)',
+      ncPremiumJustify: s.nc.premium ? 'flex-end' : 'flex-start',
+      addCourse: () => {
+        const t = s.nc.title.trim();
+        if (!t) { this.flash('Donnez un titre au cours'); return; }
+        const d = s.nc.duration.trim();
+        this.setState(p => ({
+          courses: [{ id: 'c' + Date.now(), title: t, duration: (d ? d.replace(/\s*min$/i, '') + ' min' : '20 min'), univers: p.nc.univers, premium: p.nc.premium }].concat(p.courses),
+          nc: { title: '', duration: '', univers: p.nc.univers, premium: p.nc.premium }
+        }));
+        this.flash('Cours publié');
+      },
+      courseCount: s.courses.length,
+      courses: s.courses.map(c => ({
+        title: c.title, meta: c.univers + ' · ' + c.duration,
+        tagLabel: c.premium ? 'Premium' : 'Gratuit',
+        tagBg: c.premium ? 'var(--color-accent-200)' : 'var(--color-accent-2-200)',
+        tagFg: c.premium ? 'var(--color-accent-800)' : 'var(--color-accent-2-800)',
+        togglePremium: () => this.setState(p => ({ courses: p.courses.map(x => x.id === c.id ? { ...x, premium: !x.premium } : x) })),
+        remove: () => this.setState(p => ({
+          courses: p.courses.filter(x => x.id !== c.id),
+          progs: p.progs.map(g => ({ ...g, videos: g.videos.filter(v => v !== c.id) }))
+        }))
+      })),
+
+      npTitle: s.np.title, npDesc: s.np.desc,
+      setNpTitle: e => this.setState(p => ({ np: { ...p.np, title: e.target.value } })),
+      setNpDesc: e => this.setState(p => ({ np: { ...p.np, desc: e.target.value } })),
+      addProgram: () => {
+        const t = s.np.title.trim();
+        if (!t) { this.flash('Donnez un nom au programme'); return; }
+        const id = 'p' + Date.now();
+        this.setState(p => ({ progs: [{ id, title: t, desc: p.np.desc.trim(), videos: [] }].concat(p.progs), np: { title: '', desc: '' }, openProgram: id }));
+        this.flash('Programme créé — liez ses vidéos');
+      },
+      adminPrograms: s.progs.map(g => ({
+        title: g.title,
+        meta: g.videos.length + (g.videos.length === 1 ? ' vidéo liée' : ' vidéos liées') + (g.desc ? ' · ' + g.desc : ''),
+        open: s.openProgram === g.id,
+        caret: s.openProgram === g.id ? 'rotate(90deg)' : 'none',
+        toggle: () => this.setState(p => ({ openProgram: p.openProgram === g.id ? '' : g.id })),
+        links: s.courses.map(c => {
+          const on = g.videos.indexOf(c.id) >= 0;
+          return {
+            title: c.title, duration: c.duration,
+            bg: on ? 'var(--color-accent-2-100)' : 'var(--color-neutral-200)',
+            border: on ? 'var(--color-accent-2-600)' : 'var(--color-neutral-400)',
+            fill: on ? 'var(--color-accent-2-600)' : 'transparent',
+            toggle: () => this.setState(p => ({
+              progs: p.progs.map(x => x.id === g.id ? { ...x, videos: on ? x.videos.filter(v => v !== c.id) : x.videos.concat([c.id]) } : x)
+            }))
+          };
+        })
+      })),
+
+      userStats: [
+        { value: s.users.length, label: 'comptes' },
+        { value: s.users.filter(u => u.active && u.plan !== 'Aucun').length, label: 'abonnements actifs' }
+      ],
+      users: s.users.map(u => ({
+        name: u.name, email: u.email, plan: u.plan, initial: u.name.slice(0, 1),
+        planBg: u.plan === 'Aucun' ? 'var(--color-neutral-300)' : u.plan === 'Essai' ? 'var(--color-accent-200)' : 'var(--color-accent-2-200)',
+        planFg: u.plan === 'Aucun' ? 'var(--color-neutral-800)' : u.plan === 'Essai' ? 'var(--color-accent-800)' : 'var(--color-accent-2-800)',
+        cyclePlan: () => {
+          const order = ['Aucun', 'Essai', 'Mensuel', 'Annuel'];
+          this.setState(p => ({ users: p.users.map(x => x.id === u.id ? { ...x, plan: order[(order.indexOf(x.plan) + 1) % 4] } : x) }));
+        },
+        stateColor: u.active ? 'var(--color-accent-2-700)' : 'var(--color-accent-700)',
+        icon: u.active
+          ? html('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M20 6 9 17l-5-5" transform="scale(.62) translate(7.5 7)"/></svg>')
+          : html('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>'),
+        toggle: () => {
+          this.setState(p => ({ users: p.users.map(x => x.id === u.id ? { ...x, active: !x.active } : x) }));
+          this.flash(u.active ? 'Compte suspendu' : 'Compte réactivé');
+        }
+      })),
+
+      mrr: (() => {
+        const m = s.planRows.find(p => p.id === 'mensuel');
+        const a = s.planRows.find(p => p.id === 'annuel');
+        const num = v => parseFloat(String(v).replace(',', '.').replace(/[^\d.]/g, '')) || 0;
+        const total = (m.on ? m.count * num(m.price) : 0) + (a.on ? a.count * num(a.price) / 12 : 0);
+        return Math.round(total).toLocaleString('fr-FR') + ' €';
+      })(),
+      activeCount: s.planRows.reduce((n, p) => n + (p.on ? p.count : 0), 0),
+      trialCount: 74,
+      adminPlans: s.planRows.map(p => ({
+        title: p.title, price: p.price,
+        meta: p.count + ' abonnées · ' + (p.on ? 'en vente' : 'retirée de la vente'),
+        setPrice: e => this.setState(st => ({ planRows: st.planRows.map(x => x.id === p.id ? { ...x, price: e.target.value } : x) })),
+        toggle: () => this.setState(st => ({ planRows: st.planRows.map(x => x.id === p.id ? { ...x, on: !x.on } : x) })),
+        switchBg: p.on ? 'var(--color-accent-2-600)' : 'var(--color-neutral-400)',
+        switchJustify: p.on ? 'flex-end' : 'flex-start'
+      })),
+      trialOptions: ['Aucun', '7 jours', '14 jours'].map(label => ({
+        label, go: () => this.setState({ trial: label }),
+        bg: s.trial === label ? 'var(--color-accent-2-700)' : 'var(--color-neutral-100)',
+        fg: s.trial === label ? '#fff' : 'var(--color-text)'
+      })),
+
+      isAdminUser: admin,
+      profilRows: (admin ? [{ label: 'Administration', go: () => this.go('admin') }] : []).concat([
+        { label: 'Nos experts', go: () => this.go('experts') },
+        { label: 'Mes téléchargements', go: () => this.flash('Écran non maquetté') },
+        { label: 'Rappels de pratique', go: () => this.flash('Écran non maquetté') },
+        { label: 'Aide & contact', go: () => this.flash('Écran non maquetté') },
+        { label: 'Se déconnecter', go: () => this.flash('Écran non maquetté') }
+      ]),
+
+      plans,
+      perks: ['Plus de 300 cours vidéo', 'Programmes guidés complets', 'Téléchargement hors connexion', 'Nouveaux cours chaque semaine'],
+      subscribeLabel: s.plan === 'annuel' ? 'Continuer — 99 € / an' : 'Continuer — 12 € / mois',
+      subscribe: () => { this.setState({ subscribed: true }); this.flash('Bienvenue, tout est débloqué'); this.go('accueil'); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
