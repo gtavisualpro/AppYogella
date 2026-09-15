@@ -225,7 +225,7 @@
 }
 .dropzone.has-file { color: var(--color-accent-2-800); border-color: var(--color-accent-2-500); border-style: solid; }
 
-@media (min-width: 481px) {
+@media (min-width: 481px) and (max-width: 1023px) {
   .app-shell { border-inline: 1px solid var(--color-divider); box-shadow: var(--shadow-md); }
 }
 
@@ -301,3 +301,80 @@
 }
 .player-action:active { background: var(--color-neutral-200); }
 .player-action:disabled { opacity: .4; cursor: default; }
+
+/* ───────────────────────── Tablette ─────────────────────────
+   La colonne s'élargit et les grilles gagnent des colonnes ; la navigation
+   reste en bas, à portée de pouce sur un iPad tenu à deux mains. */
+@media (min-width: 768px) {
+  .app-shell { max-width: 760px; }
+  .tabbar { max-width: 760px; }
+
+  .screen { padding: 28px 28px 8px; gap: 26px; }
+  .screen-header { padding: 0 28px; }
+  .screen-header h1 { font-size: 24px; }
+
+  .card-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .univers-tile { height: 118px; }
+  .univers-tile span.label { font-size: 15px; }
+  .mood-grid { grid-template-columns: repeat(4, 1fr); }
+
+  /* Plus besoin de défilement horizontal : tout tient en grille. */
+  .hscroll { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; }
+  .prog-card { width: auto; }
+  .prog-card .cover { height: 132px; }
+
+  .list-row .thumb { width: 96px; height: 72px; }
+  .list-row .title { font-size: 15.5px; }
+}
+
+/* ───────────────────────── Desktop ─────────────────────────
+   La barre d'onglets devient un rail vertical à gauche, et le contenu se
+   centre dans l'espace restant plutôt que de s'étirer sur toute la largeur. */
+@media (min-width: 1024px) {
+  .app-shell { max-width: none; }
+
+  .tabbar {
+    top: 0; bottom: 0; left: 0; right: auto;
+    width: 236px; max-width: none; transform: none;
+    border-top: 0; border-right: 1px solid var(--color-divider);
+    justify-content: flex-start; padding-top: 22px; gap: 8px;
+  }
+  .tabbar .tabbar-brand {
+    display: block; font-family: var(--font-heading); font-size: 25px;
+    color: var(--color-accent-700); padding: 0 22px 10px;
+  }
+  .tabbar .tabs {
+    flex-direction: column; gap: 4px; padding: 0 14px;
+  }
+  .tab-item {
+    flex-direction: row; justify-content: flex-start; gap: 13px;
+    padding: 11px 14px; border-radius: 16px; font-size: 14px;
+  }
+  .tab-item:hover { background: var(--color-neutral-200); }
+  .tab-item.active { background: var(--color-accent-2-100); }
+
+  .app-main { padding-left: 236px; padding-bottom: 40px; }
+  .app-main.no-tabbar { padding-left: 0; }
+
+  /* Le contenu garde une largeur de lecture confortable. */
+  .screen, .screen-tight { max-width: 880px; margin-inline: auto; width: 100%; }
+
+  .card-grid { grid-template-columns: repeat(4, 1fr); }
+  .mood-grid { grid-template-columns: repeat(4, 1fr); }
+  .hscroll { grid-template-columns: repeat(4, 1fr); }
+
+  .toast { left: calc(50% + 118px); bottom: 32px; }
+
+  /* Le lecteur et les tunnels occupent l'écran, centrés. */
+  .player-screen { max-width: 980px; margin-inline: auto; width: 100%; }
+  .app-main:has(> .app-sheet-page) .sheet { padding-bottom: 40px; }
+  .app-sheet-page { max-width: 880px; margin-inline: auto; width: 100%; }
+
+  /* La feuille d'édition devient une boîte de dialogue centrée. */
+  .edit-sheet-backdrop { align-items: center; }
+  .edit-sheet { max-width: 520px; border-radius: 26px; padding-bottom: 20px; }
+  .edit-sheet-handle { display: none; }
+}
+
+/* Masquée tant que la navigation est une barre horizontale en bas. */
+.tabbar-brand { display: none; }

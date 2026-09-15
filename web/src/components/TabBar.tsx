@@ -12,6 +12,8 @@ const TABS = [
 export function TabBar() {
   return (
     <div className="tabbar">
+      {/* Visible uniquement quand la barre devient un rail latéral. */}
+      <div className="tabbar-brand">Yogella</div>
       <div className="tabs">
         {TABS.map(({ to, label, Icon, end }) => (
           <NavLink key={to} to={to} end={end} className={({ isActive }) => `tab-item${isActive ? ' active' : ''}`}>
