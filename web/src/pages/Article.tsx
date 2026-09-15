@@ -3,6 +3,7 @@ import { useCourse, useCourses } from '../lib/hooks'
 import { useGatedOpen } from '../lib/useGatedOpen'
 import { CourseRow } from '../components/CourseRow'
 import { IconChevronLeft, IconBookmark, IconPlay, IconLock } from '../components/icons'
+import { Loader } from '../components/Loader'
 
 export default function Article() {
   const { id } = useParams()
@@ -11,7 +12,7 @@ export default function Article() {
   const { data: article } = useCourse(id)
   const { data: sameUniverse } = useCourses({ universe: article?.universe })
 
-  if (!article) return null
+  if (!article) return <Loader />
   const related = (sameUniverse ?? []).filter((c) => c.id !== article.id)
 
   return (

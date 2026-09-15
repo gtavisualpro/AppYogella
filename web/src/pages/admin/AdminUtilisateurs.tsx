@@ -4,6 +4,7 @@ import { EditSheet } from '../../components/AdminEdit'
 import { useToast } from '../../lib/ToastContext'
 import { ApiError } from '../../lib/api'
 import { IconCircleCheck, IconCirclePause, IconPencil } from '../../components/icons'
+import { Loader } from '../../components/Loader'
 
 const PLAN_COLORS: Record<string, { bg: string; fg: string }> = {
   Aucun: { bg: 'var(--color-neutral-300)', fg: 'var(--color-neutral-800)' },
@@ -13,10 +14,12 @@ const PLAN_COLORS: Record<string, { bg: string; fg: string }> = {
 }
 
 export default function AdminUtilisateurs() {
-  const { data } = useAdminUsers()
+  const { data, isPending } = useAdminUsers()
   const updateUser = useUpdateUser()
   const flash = useToast()
   const [editing, setEditing] = useState<AdminUser | null>(null)
+
+  if (isPending) return <Loader />
 
   return (
     <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>

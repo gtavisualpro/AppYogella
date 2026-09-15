@@ -17,6 +17,7 @@ import {
   IconMore,
 } from '../components/icons'
 import heroPhoto from '../assets/course-photo.webp'
+import { Loader } from '../components/Loader'
 
 function formatTime(totalSeconds: number) {
   const m = Math.floor(totalSeconds / 60)
@@ -68,7 +69,7 @@ export default function Lecteur() {
     setProgress(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)))
   }
 
-  if (!course) return null
+  if (!course) return <Loader />
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

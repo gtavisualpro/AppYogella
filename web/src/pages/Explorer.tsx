@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { useUniverses } from '../lib/hooks'
 import { api } from '../lib/api'
 import type { Course, ProgramSummary } from '../lib/api'
+import { Loader } from '../components/Loader'
 
 export default function Explorer() {
   const navigate = useNavigate()
-  const { data: universes } = useUniverses()
+  const { data: universes, isPending } = useUniverses()
 
   async function onSelect(u: NonNullable<typeof universes>[number]) {
     if (u.dest === 'categorie') {
@@ -18,6 +19,8 @@ export default function Explorer() {
       if (programs[0]) navigate(`/programme/${programs[0].id}`)
     }
   }
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen">

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAdminPlans, useUpdatePlan, useUpdateSettings, useAdminStats } from '../../lib/adminHooks'
+import { Loader } from '../../components/Loader'
 
 const TRIAL_OPTIONS = [
   { label: 'Aucun', days: 0 },
@@ -8,11 +9,13 @@ const TRIAL_OPTIONS = [
 ]
 
 export default function AdminAbonnements() {
-  const { data } = useAdminPlans()
-  const { data: stats } = useAdminStats()
+  const { data, isPending: plansPending } = useAdminPlans()
+  const { data: stats, isPending: statsPending } = useAdminStats()
   const updatePlan = useUpdatePlan()
   const updateSettings = useUpdateSettings()
   const [priceDrafts, setPriceDrafts] = useState<Record<string, string>>({})
+
+  if (plansPending || statsPending) return <Loader />
 
   return (
     <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>

@@ -5,6 +5,7 @@ import { usePlans } from '../lib/hooks'
 import { useToast } from '../lib/ToastContext'
 import { api, ApiError } from '../lib/api'
 import { IconX, IconLock, IconCheck } from '../components/icons'
+import { Loader } from '../components/Loader'
 
 const PERKS = [
   'Plus de 300 cours vidéo',
@@ -16,7 +17,7 @@ const PERKS = [
 export default function Paywall() {
   const navigate = useNavigate()
   const flash = useToast()
-  const { data } = usePlans()
+  const { data, isPending } = usePlans()
   const [plan, setPlan] = useState<'MONTHLY' | 'ANNUAL'>('ANNUAL')
 
   const checkout = useMutation({
@@ -29,6 +30,8 @@ export default function Paywall() {
 
   const plans = data?.plans ?? []
   const selected = plans.find((p) => p.key === plan)
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen" style={{ padding: '6px 22px 30px', minHeight: '100%' }}>

@@ -4,10 +4,11 @@ import { EditSheet, ImagePicker } from '../../components/AdminEdit'
 import { ApiError } from '../../lib/api'
 import { useToast } from '../../lib/ToastContext'
 import { IconCheck, IconChevronRight, IconPencil } from '../../components/icons'
+import { Loader } from '../../components/Loader'
 
 export default function AdminProgrammes() {
-  const { data: programs } = useAdminPrograms()
-  const { data: courses } = useAdminCourses()
+  const { data: programs, isPending: programsPending } = useAdminPrograms()
+  const { data: courses, isPending: coursesPending } = useAdminCourses()
   const addProgram = useAddProgram()
   const toggleVideo = useToggleProgramVideo()
   const updateProgram = useUpdateProgram()
@@ -30,6 +31,8 @@ export default function AdminProgrammes() {
     setDesc('')
     setOpenId(res.program.id)
   }
+
+  if (programsPending || coursesPending) return <Loader />
 
   return (
     <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>

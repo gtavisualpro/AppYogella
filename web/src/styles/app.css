@@ -253,3 +253,24 @@
 }
 .row-action:active { background: var(--color-neutral-200); }
 .row-action:hover { color: var(--color-accent-700); }
+
+/* — attente de chargement d'une page — */
+.loader {
+  flex: 1; min-height: 240px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 48px 20px;
+}
+.loader-ring {
+  width: 30px; height: 30px; border-radius: 999px;
+  border: 2.5px solid var(--color-divider);
+  border-top-color: var(--color-accent-600);
+  animation: loader-spin .7s linear infinite;
+}
+.loader-label { font-size: 13px; color: var(--color-neutral-600); }
+@keyframes loader-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Pas de rotation : on pulse doucement l'opacité à la place. */
+  .loader-ring { animation: loader-pulse 1.4s ease-in-out infinite; }
+  @keyframes loader-pulse { 0%, 100% { opacity: .35 } 50% { opacity: 1 } }
+}

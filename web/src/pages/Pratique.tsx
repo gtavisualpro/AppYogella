@@ -1,16 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import { usePractice } from '../lib/hooks'
 import { IconVideo, IconLock, IconChevronRight } from '../components/icons'
+import { Loader } from '../components/Loader'
 
 const CIRC = 2 * Math.PI * 30
 
 export default function Pratique() {
   const navigate = useNavigate()
-  const { data } = usePractice(true)
+  const { data, isPending } = usePractice(true)
 
   const weekly = data?.weekly ?? { sessionCount: 0, totalMinutes: 0, goalHours: 5, progressHours: 0 }
   const fraction = Math.min(1, weekly.progressHours / (weekly.goalHours || 1))
   const week = data?.week ?? []
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen">

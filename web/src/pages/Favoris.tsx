@@ -1,8 +1,11 @@
 import { useFavorites } from '../lib/hooks'
 import { CourseRow } from '../components/CourseRow'
+import { Loader } from '../components/Loader'
 
 export default function Favoris() {
-  const { data: favorites } = useFavorites(true)
+  const { data: favorites, isPending } = useFavorites(true)
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen">

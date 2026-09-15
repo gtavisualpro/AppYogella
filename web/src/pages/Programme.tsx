@@ -3,6 +3,7 @@ import { useProgram } from '../lib/hooks'
 import { useGatedOpen } from '../lib/useGatedOpen'
 import { IconChevronLeft, IconVideo, IconLock, IconCheck } from '../components/icons'
 import heroPhoto from '../assets/course-photo.webp'
+import { Loader } from '../components/Loader'
 
 export default function Programme() {
   const { id } = useParams()
@@ -10,7 +11,7 @@ export default function Programme() {
   const open = useGatedOpen()
   const { data: program } = useProgram(id)
 
-  if (!program) return null
+  if (!program) return <Loader />
 
   const nextSession = program.sessions.find((s) => !s.done) ?? program.sessions[0]
 

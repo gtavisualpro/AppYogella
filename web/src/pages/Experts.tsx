@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useExperts } from '../lib/hooks'
 import { IconChevronLeft } from '../components/icons'
+import { Loader } from '../components/Loader'
 
 export default function Experts() {
   const navigate = useNavigate()
-  const { data: experts } = useExperts()
+  const { data: experts, isPending } = useExperts()
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen">

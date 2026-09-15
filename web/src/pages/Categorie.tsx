@@ -5,14 +5,15 @@ import { useGatedOpen } from '../lib/useGatedOpen'
 import { CourseRow } from '../components/CourseRow'
 import { IconChevronLeft, IconVideo, IconLock, IconPlay } from '../components/icons'
 import heroPhoto from '../assets/course-photo.webp'
+import { Loader } from '../components/Loader'
 
 export default function Categorie() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const open = useGatedOpen()
-  const { data: universes } = useUniverses()
+  const { data: universes, isPending: universesPending } = useUniverses()
   const universe = universes?.find((u) => u.slug === slug)
-  const { data: courses } = useCourses({ universe: universe?.label })
+  const { data: courses, isPending: coursesPending } = useCourses({ universe: universe?.label })
   const [filter, setFilter] = useState('Tous')
 
   const categories = useMemo(() => {
@@ -22,6 +23,8 @@ export default function Categorie() {
 
   const featured = courses?.[0]
   const rest = (courses ?? []).slice(1).filter((c) => filter === 'Tous' || c.category === filter)
+
+  if (universesPending || coursesPending) return <Loader />
 
   return (
     <div className="screen-tight">

@@ -2,13 +2,14 @@ import { useMemo, useState } from 'react'
 import { useCourses } from '../lib/hooks'
 import { CourseRow } from '../components/CourseRow'
 import { IconSearch, IconX, IconMenu } from '../components/icons'
+import { Loader } from '../components/Loader'
 
 const TABS = ['Tout', 'Yoga', 'Auto-massages', 'Comprendre son corps']
 
 export default function Recherche() {
   const [query, setQuery] = useState('')
   const [tab, setTab] = useState('Tout')
-  const { data: courses } = useCourses({ search: query || undefined, universe: tab === 'Tout' ? undefined : tab })
+  const { data: courses, isPending } = useCourses({ search: query || undefined, universe: tab === 'Tout' ? undefined : tab })
 
   const groups = useMemo(() => {
     const list = courses ?? []
@@ -20,6 +21,8 @@ export default function Recherche() {
     }
     return [...byUniverse.entries()].map(([title, items]) => ({ title, items }))
   }, [courses, tab])
+
+  if (isPending) return <Loader />
 
   return (
     <div className="screen-tight">

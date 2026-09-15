@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { api } from './api'
 import type { Course, Universe, ProgramSummary, ProgramDetail, Expert } from './api'
 
@@ -7,6 +7,9 @@ export function useCourses(params: { universe?: string; category?: string; searc
   return useQuery({
     queryKey: ['courses', params],
     queryFn: () => api.get<{ courses: Course[] }>(`/api/courses${qs ? `?${qs}` : ''}`).then((d) => d.courses),
+    // La recherche relance la requête à chaque frappe : on garde les résultats
+    // précédents à l'écran plutôt que de repasser par l'état de chargement.
+    placeholderData: keepPreviousData,
   })
 }
 

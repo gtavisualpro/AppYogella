@@ -4,11 +4,12 @@ import { EditSheet, ImagePicker } from '../../components/AdminEdit'
 import { useToast } from '../../lib/ToastContext'
 import { ApiError } from '../../lib/api'
 import { IconUpload, IconTrash, IconPencil } from '../../components/icons'
+import { Loader } from '../../components/Loader'
 
 const UNIVERSES = ['Yoga', 'Auto-massages', 'Respiration', 'Comprendre son corps', 'Sommeil', 'Nutrition']
 
 export default function AdminCours() {
-  const { data: courses } = useAdminCourses()
+  const { data: courses, isPending } = useAdminCourses()
   const addCourse = useAddCourse()
   const updateCourse = useUpdateCourse()
   const deleteCourse = useDeleteCourse()
@@ -66,6 +67,8 @@ export default function AdminCours() {
     setFileName('')
     if (fileInput.current) fileInput.current.value = ''
   }
+
+  if (isPending) return <Loader />
 
   return (
     <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>

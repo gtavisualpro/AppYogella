@@ -5,16 +5,19 @@ import { useGatedOpen } from '../lib/useGatedOpen'
 import { MOODS } from '../lib/moods'
 import { IconBell, IconPlay, IconChevronRight, IconVideo, IconLock } from '../components/icons'
 import heroPhoto from '../assets/course-photo.webp'
+import { Loader } from '../components/Loader'
 
 export default function Home() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const open = useGatedOpen()
-  const { data: programs } = usePrograms(false)
+  const { data: programs, isPending: programsPending } = usePrograms(false)
   const { data: practice } = usePractice(!!user)
 
   const hasAccess = user?.hasAccess ?? false
   const resume = practice?.resume
+
+  if (programsPending) return <Loader />
 
   return (
     <div className="screen">
