@@ -64,6 +64,13 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { height: 100%; }
+html {
+  /* Empêche iOS d'agrandir le texte en orientation paysage. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+/* Supprime le délai et le zoom du double-tap sur les éléments interactifs. */
+a, button, label, .input, .tab-item, [role="button"] { touch-action: manipulation; }
 body {
   margin: 0;
   background: var(--color-bg);
@@ -112,6 +119,12 @@ button, input, select, textarea { font-family: var(--font-body); }
   color: var(--color-text); caret-color: var(--color-accent);
   background: var(--color-surface); border: 1px solid var(--color-divider);
   border-radius: 999px;
+}
+/* iOS zoome automatiquement sur un champ dont la police est < 16px, et ne
+   dézoome jamais ensuite — c'est la vraie cause de l'écran zoomé après
+   connexion. Le 14.5px du design est conservé au pointeur fin (souris). */
+@media (pointer: coarse) {
+  .input, input, select, textarea { font-size: 16px; }
 }
 .input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
 .input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
